@@ -8,6 +8,8 @@ int main()
      size_t height= 200;
 
      rast::Canvas c (width, height);
+
+     c.lineDDA(10, 10, 30, 30);
      
      rstzr::File file ("teste");
      

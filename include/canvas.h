@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include <math.h>
 
 #include "color.h"
 

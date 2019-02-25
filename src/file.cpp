@@ -27,7 +27,7 @@ void rstzr::File::save_ppm( const rast::Canvas &canvas){
   	{
   	    for (unsigned int y=0; y < canvas.height() ; y++){
   		    for (int z=0; z < 3; z++)
-  			   file << static_cast<unsigned>( image[ x + canvas.width() * (y + 3 * z) ] ) << " ";
+  			   file << static_cast<unsigned>( image[ canvas.height() *canvas.width()*z+ canvas.width()*y +x] ) << " ";
   	    }
   		file << "\n";
   	}

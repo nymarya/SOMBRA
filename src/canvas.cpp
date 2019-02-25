@@ -15,9 +15,9 @@ rast::Canvas::Canvas(const size_t width, const size_t height)
     for (unsigned int x = 0; x < m_width; x++)
   	{
   	    for (unsigned int y=0; y < m_height ; y++){
-  		    m_pixels[ x + m_width * (y + 3 * 0) ] = m_bkg_color.red();
-  		    m_pixels[ x + m_width * (y + 3 * 1) ] = m_bkg_color.green();
-  		    m_pixels[ x + m_width * (y + 3 * 2) ] = m_bkg_color.blue();
+  		    m_pixels[                    m_width*y + x ] = m_bkg_color.red();
+  		    m_pixels[ m_height*m_width + m_width*y + x ] = m_bkg_color.green();
+  		    m_pixels[ m_height*m_width*2+ m_width*y + x ] = m_bkg_color.blue();
   		    
   	    }
   	}
@@ -30,9 +30,9 @@ rast::Canvas::Canvas(const size_t width, const size_t height)
 //TODO: change x and y to Point2D
 void rast::Canvas::pixel (const long x, const long y, const Color &c){
    // m_pixels[(x*m_width)+y] = c;
-   m_pixels[x + m_width * (y + 3 * 0)] = c.red();
-   m_pixels[x + m_width * (y + 3 * 1)] = c.green();
-   m_pixels[x + m_width * (y + 3 * 2)] = c.blue();
+   m_pixels[ m_width*y + x] = c.red();
+   m_pixels[m_height*m_width + m_width*y +x] = c.green();
+   m_pixels[m_height*m_width*2+ m_width*y+ x] = c.blue();
 }
  
 /**
@@ -66,8 +66,16 @@ component_t* rast::Canvas::pixels (void) const{
 /**
  * @brief Draw a line between two points 2D
  */
-void rast::Canvas::lineDDA (const long x, const long y, const long x1, const long y1){
-    
+void rast::Canvas::lineDDA (const long x0, const long y0, const long x1, const long y1){
+    float dy = y1 - y0;
+    float dx = x1 - x0;
+    float m = dy/dx;
+    float y = y0;
+
+    for( int x = x0; x <= x1; x++ ) {
+      pixel(x,round(y), m_fill_color);
+      y += m;
+    }
 }
 
 void rast::Canvas::bkg_color(const Color &c){
