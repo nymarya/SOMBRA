@@ -65,18 +65,28 @@ component_t* rast::Canvas::pixels (void) const{
  
 /**
  * @brief Draw a line between two points 2D
+ * @see https://www.geeksforgeeks.org/dda-line-generation-algorithm-computer-graphics/
  */
 void rast::Canvas::lineDDA (const long x0, const long y0, const long x1, const long y1){
     float dy = y1 - y0;
     float dx = x1 - x0;
-    float m = dy/dx;
     float y = y0;
+    float x = x0;
 
-    for( int x = x0; x <= x1; x++ ) {
-      pixel(x,round(y), m_fill_color);
-      y += m;
+    // calculate steps required for generating pixels 
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy); 
+  
+    // calculate increment in x & y for each steps 
+    float x_inc = dx / (float) steps; 
+    float y_inc = dy / (float) steps; 
+
+    for( int i = 0; i < steps; i++ ) {
+      pixel(round(x),round(y), m_fill_color);
+      y += y_inc;
+      x += x_inc;
     }
 }
+
 
 void rast::Canvas::bkg_color(const Color &c){
     m_bkg_color = c;

@@ -13,10 +13,11 @@ void rstzr::File::save_ppm( const rast::Canvas &canvas){
     
     component_t * image = canvas.pixels();
 
-	std::ofstream file;
- 	
- 	std::string extension = ".ppm";
- 	std::string path = this->filename + extension;
+  	std::ofstream file;
+   	
+    std::string folder = "gallery/";
+   	std::string extension = ".ppm";
+   	std::string path = folder + this->filename + extension;
     file.open (path);
     file << "P3" << "\n";
   	file << canvas.width() << " " 
