@@ -57,6 +57,11 @@ namespace rast{
              * @brief Draw a line between two points 2D
              */
             void lineDDA (const long x, const long y, const long x1, const long y1);
+
+            /**
+             * @brief Draw a line between two points 2D using the brsenham algorithm
+             */
+            void lineBresenham (const long x, const long y, const long x1, const long y1);
             
             void bkg_color(const Color &c);
             

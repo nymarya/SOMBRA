@@ -87,6 +87,28 @@ void rast::Canvas::lineDDA (const long x0, const long y0, const long x1, const l
     }
 }
 
+/**
+ * @brief Draw a line between two points 2D using the Bresenham algorithm.
+ */
+void rast::Canvas::lineBresenham(const long x0, const long y0, const long x1, const long y1){
+    float dy = y1 - y0;
+    float dx = x1 - x0;
+    float p = 2 *dy - dx;
+    float y = y0;
+    float x = x0;
+
+    pixel(x, y, m_fill_color);
+    for( x = x0; x < x1; x++ ) {
+      if( p < 0){
+        p += 2 * dy;
+      } else {
+        y++;
+        p += 2 * dy - 2 * dx;
+      }
+      pixel(x, y, m_fill_color);
+    }
+}
+
 
 void rast::Canvas::bkg_color(const Color &c){
     m_bkg_color = c;
