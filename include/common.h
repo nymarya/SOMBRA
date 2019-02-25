@@ -5,4 +5,10 @@ using component_t = unsigned char;
 
 typedef long coord_type;
 
+enum LINE_MODE{
+	DDA ,
+	BRESENHAM,
+	COMPARE
+};
+
 #endif

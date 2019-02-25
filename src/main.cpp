@@ -1,5 +1,6 @@
 
 #include "../include/canvas.h"
+#include "../include/line.h"
 #include "../include/file.h"
 
 int main() 
@@ -8,8 +9,8 @@ int main()
      size_t height= 200;
 
      rstzr::Point2D p1 (10, 10);
-     rstzr::Point2D p2 (199, 199);
-     rstzr::Point2D p3 (10, 30);
+     rstzr::Point2D p2 (10, 199);
+     //rstzr::Point2D p3 (199, 10);
      rstzr::Point2D p4 (199, 100);
      rstzr::Point2D p5 (100, 100);
      rstzr::Point2D p6 (10, 100);
@@ -27,7 +28,7 @@ int main()
 
      rstzr::Canvas c (width, height);
 
-     c.lineDDA(p2, p3, fill_color);
+     c.line(p2, p7, fill_color, LINE_MODE::DDA);
      
      rstzr::File file ("increasing_dda_error");
      
@@ -39,7 +40,7 @@ int main()
 
      rstzr::Canvas c1 (width, height);
 
-     c1.lineDDA(p1, p4, fill_color);
+     c1.line(p1, p4, fill_color, LINE_MODE::DDA);
      
      rstzr::File file1 ("decreasing_dda_error");
      
@@ -52,7 +53,7 @@ int main()
 
      rstzr::Canvas c2 (width, height);
 
-     c2.lineDDA(p1, p5, fill_color);
+     c2.line(p1, p5, fill_color, LINE_MODE::DDA);
      
      rstzr::File file2 ("45_dda_error");
      
@@ -64,7 +65,7 @@ int main()
 
      rstzr::Canvas c3 (width, height);
 
-     c3.lineDDA(p1, p6, fill_color);
+     c3.line(p1, p6, fill_color, LINE_MODE::DDA);
      
      rstzr::File file3 ("hr_dda_error");
      
@@ -75,7 +76,7 @@ int main()
      ///////////////////////////
      rstzr::Canvas c4 (width, height);
 
-     c4.lineDDA(p1, p7, fill_color);
+     c4.line(p1, p7, fill_color, LINE_MODE::DDA);
      
      rstzr::File file4 ("vr_dda_error");
      
@@ -90,7 +91,7 @@ int main()
 
      rstzr::Canvas c5 (width, height);
 
-     c5.lineDDA(p2, p3, fill_color);
+     c5.line(p2, p7, fill_color,LINE_MODE::BRESENHAM);
      
      rstzr::File file5 ("increasing_bres_error");
      
@@ -102,7 +103,7 @@ int main()
 
      rstzr::Canvas c6 (width, height);
 
-     c6.lineDDA(p1, p4, fill_color);
+     c6.line(p1, p4, fill_color, LINE_MODE::BRESENHAM);
      
      rstzr::File file6 ("decreasing_bres_error");
      
@@ -115,7 +116,7 @@ int main()
 
      rstzr::Canvas c7 (width, height);
 
-     c7.lineDDA(p1, p5, fill_color);
+     c7.line(p1, p5, fill_color, LINE_MODE::BRESENHAM);
      
      rstzr::File file7 ("45_bres_error");
      
@@ -127,7 +128,7 @@ int main()
 
      rstzr::Canvas c8 (width, height);
 
-     c8.lineDDA(p1, p6, fill_color);
+     c8.line(p1, p6, fill_color, LINE_MODE::BRESENHAM);
      
      rstzr::File file8 ("hr_bres_error");
      
@@ -138,11 +139,23 @@ int main()
      ///////////////////////////
      rstzr::Canvas c9 (width, height);
 
-     c9.lineDDA(p1, p7, fill_color);
+     c9.line(p1, p7, fill_color, LINE_MODE::BRESENHAM);
      
      rstzr::File file9 ("vr_bres_error");
      
      file9.save_ppm(c9);
+
+     ///////////////////////////
+     //// COMPARE           ////
+     ///////////////////////////
+
+     rstzr::Canvas c10 (width, height);
+
+     c10.line(p2, p7, fill_color, LINE_MODE::COMPARE);
+     
+     rstzr::File file10 ("vr_compare_error");
+     
+     file10.save_ppm(c10);
 
      
      return 0;

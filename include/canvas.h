@@ -10,11 +10,12 @@
 #include "color.h"
 #include "point.h"
 
+#include "line.h"
+
 using component_t = unsigned char;
 
-
 namespace rstzr{
-    
+
     class Canvas {
         
         public:
@@ -57,13 +58,8 @@ namespace rstzr{
             /**
              * @brief Draw a line between two points 2D
              */
-            void lineDDA (rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c );
+            void line (rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c, LINE_MODE mode );
 
-            /**
-             * @brief Draw a line between two points 2D using the brsenham algorithm
-             */
-            void lineBresenham (rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c);
-            
             void bkg_color(const Color &c);
             
             void fill_color(const Color &c);
@@ -84,6 +80,18 @@ namespace rstzr{
             Color m_fill_color;
  
             Color m_bkg_color;
+
+            /**
+             * @brief Draw a line between two points 2D using the brsenham algorithm
+             */
+            void drawLineBresenham( rstzr::Point2D p1, rstzr::Point2D p2, const Color &c);
+
+            /**
+             * @brief Draw a line between two points 2D
+             * @see https://www.geeksforgeeks.org/dda-line-generation-algorithm-computer-graphics/
+             */
+            void drawLineDDA( rstzr::Point2D p1, rstzr::Point2D p2, const Color &c );
+
     };
 
     
