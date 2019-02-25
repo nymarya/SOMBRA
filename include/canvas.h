@@ -13,7 +13,7 @@
 using component_t = unsigned char;
 
 
-namespace rast{
+namespace rstzr{
     
     class Canvas {
         

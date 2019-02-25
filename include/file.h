@@ -19,15 +19,15 @@ namespace rstzr{
             
             void read();
             
-            void save_ppm( const rast::Canvas &canvas);
+            void save_ppm( const rstzr::Canvas &canvas);
         
         private:
         
-            std::string filename;
+            std::string m_filename;
             
             // 0 -> read
             // 1 -> write
-            int mode; 
+            int m_mode; 
     };
 }
 

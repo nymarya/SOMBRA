@@ -4,7 +4,7 @@ using component_t = unsigned char;
 /**
  * @brief Constructor Default
  */
-rast::Canvas::Canvas(const size_t width, const size_t height)
+rstzr::Canvas::Canvas(const size_t width, const size_t height)
 : m_width(width)
 , m_height(height)
 , m_fill_color (Color(0,0,0) )
@@ -28,7 +28,7 @@ rast::Canvas::Canvas(const size_t width, const size_t height)
  * @brief Set the color of a pixel on the canvas
  */
 //TODO: change x and y to Point2D
-void rast::Canvas::pixel (const long x, const long y, const Color &c){
+void rstzr::Canvas::pixel (const long x, const long y, const Color &c){
    // m_pixels[(x*m_width)+y] = c;
    m_pixels[ m_width*y + x] = c.red();
    m_pixels[m_height*m_width + m_width*y +x] = c.green();
@@ -38,28 +38,28 @@ void rast::Canvas::pixel (const long x, const long y, const Color &c){
 /**
  * @brief Get the pixel color from canvas
  */
-component_t rast::Canvas::pixel (const long x, const long y) const{
+component_t rstzr::Canvas::pixel (const long x, const long y) const{
     return m_pixels[(x*m_width)+y];
 }
 
 /**
  * @brief Get the canvas width
  */
-size_t 	rast::Canvas::width (void) const{
+size_t 	rstzr::Canvas::width (void) const{
     return m_width;
 }
 
 /**
  * @brief Get the canvas height
  */
-size_t 	rast::Canvas::height (void) const{
+size_t 	rstzr::Canvas::height (void) const{
     return m_height;
 }
 
 /**
  * @brief Get the canvas pixels as an array of unsigned char.
  */
-component_t* rast::Canvas::pixels (void) const{
+component_t* rstzr::Canvas::pixels (void) const{
     return m_pixels.get();
 }
  
@@ -67,7 +67,7 @@ component_t* rast::Canvas::pixels (void) const{
  * @brief Draw a line between two points 2D
  * @see https://www.geeksforgeeks.org/dda-line-generation-algorithm-computer-graphics/
  */
-void rast::Canvas::lineDDA ( rstzr::Point2D &p1,  rstzr::Point2D &p2, const Color &c){
+void rstzr::Canvas::lineDDA ( rstzr::Point2D &p1,  rstzr::Point2D &p2, const Color &c){
     coord_type x0 = p1.x();
     coord_type x1 = p2.x();
     coord_type y0 = p1.y();
@@ -96,7 +96,7 @@ void rast::Canvas::lineDDA ( rstzr::Point2D &p1,  rstzr::Point2D &p2, const Colo
 /**
  * @brief Draw a line between two points 2D using the Bresenham algorithm.
  */
-void rast::Canvas::lineBresenham(rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c){
+void rstzr::Canvas::lineBresenham(rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c){
     coord_type x0 = p1.x();
     coord_type x1 = p2.x();
     coord_type y0 = p1.y();
@@ -121,17 +121,17 @@ void rast::Canvas::lineBresenham(rstzr::Point2D &p1, rstzr::Point2D &p2, const C
 }
 
 
-void rast::Canvas::bkg_color(const Color &c){
+void rstzr::Canvas::bkg_color(const Color &c){
     m_bkg_color = c;
 }
 
-void rast::Canvas::fill_color(const Color &c){
+void rstzr::Canvas::fill_color(const Color &c){
     m_fill_color = c;
 }
 
 /**
  * @brief Get the color that will fill the object
  */
-rast::Color rast::Canvas::fill_color() const{
+rstzr::Color rstzr::Canvas::fill_color() const{
   return m_fill_color;
 }

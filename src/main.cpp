@@ -15,7 +15,7 @@ int main()
      rstzr::Point2D p6 (10, 100);
      rstzr::Point2D p7 (199, 10);
 
-     rast::Color fill_color (0,0,0);
+     rstzr::Color fill_color (0,0,0);
 
      /**
       * DDA
@@ -25,7 +25,7 @@ int main()
      /// increasing w/ error ///
      ///////////////////////////
 
-     rast::Canvas c (width, height);
+     rstzr::Canvas c (width, height);
 
      c.lineDDA(p2, p3, fill_color);
      
@@ -37,7 +37,7 @@ int main()
      /// decreasing w/ error ///
      ///////////////////////////
 
-     rast::Canvas c1 (width, height);
+     rstzr::Canvas c1 (width, height);
 
      c1.lineDDA(p1, p4, fill_color);
      
@@ -50,7 +50,7 @@ int main()
      /// 45 degrees w/ error ///
      ///////////////////////////
 
-     rast::Canvas c2 (width, height);
+     rstzr::Canvas c2 (width, height);
 
      c2.lineDDA(p1, p5, fill_color);
      
@@ -62,7 +62,7 @@ int main()
      /// horizontal w/ error ///
      ///////////////////////////
 
-     rast::Canvas c3 (width, height);
+     rstzr::Canvas c3 (width, height);
 
      c3.lineDDA(p1, p6, fill_color);
      
@@ -73,7 +73,7 @@ int main()
      ///////////////////////////
      ///  vertical w/ error ////
      ///////////////////////////
-     rast::Canvas c4 (width, height);
+     rstzr::Canvas c4 (width, height);
 
      c4.lineDDA(p1, p7, fill_color);
      
@@ -88,7 +88,7 @@ int main()
      /// increasing w/ error ///
      ///////////////////////////
 
-     rast::Canvas c5 (width, height);
+     rstzr::Canvas c5 (width, height);
 
      c5.lineDDA(p2, p3, fill_color);
      
@@ -100,7 +100,7 @@ int main()
      /// decreasing w/ error ///
      ///////////////////////////
 
-     rast::Canvas c6 (width, height);
+     rstzr::Canvas c6 (width, height);
 
      c6.lineDDA(p1, p4, fill_color);
      
@@ -113,7 +113,7 @@ int main()
      /// 45 degrees w/ error ///
      ///////////////////////////
 
-     rast::Canvas c7 (width, height);
+     rstzr::Canvas c7 (width, height);
 
      c7.lineDDA(p1, p5, fill_color);
      
@@ -125,7 +125,7 @@ int main()
      /// horizontal w/ error ///
      ///////////////////////////
 
-     rast::Canvas c8 (width, height);
+     rstzr::Canvas c8 (width, height);
 
      c8.lineDDA(p1, p6, fill_color);
      
@@ -136,7 +136,7 @@ int main()
      ///////////////////////////
      ///  vertical w/ error ////
      ///////////////////////////
-     rast::Canvas c9 (width, height);
+     rstzr::Canvas c9 (width, height);
 
      c9.lineDDA(p1, p7, fill_color);
      

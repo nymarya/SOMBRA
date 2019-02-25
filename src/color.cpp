@@ -1,6 +1,6 @@
 #include "color.h"
 
-rast::Color::Color (color_t red, color_t green, color_t blue)
+rstzr::Color::Color (color_t red, color_t green, color_t blue)
 {
 	m_channels = new color_t[3];
 	m_channels[0] = red;
@@ -8,7 +8,7 @@ rast::Color::Color (color_t red, color_t green, color_t blue)
 	m_channels[2] = blue;
 }
 
-rast::Color& rast::Color::Color::operator=( const Color& other ){
+rstzr::Color& rstzr::Color::Color::operator=( const Color& other ){
 	if (this == &other) return *this;
 
 	delete [] m_channels; //<! Deallocate old storage area.
@@ -23,14 +23,14 @@ rast::Color& rast::Color::Color::operator=( const Color& other ){
 	return *this;
 }
 
-color_t rast::Color::red() const{
+color_t rstzr::Color::red() const{
     return m_channels[0];
 }
 
-color_t rast::Color::green() const{
+color_t rstzr::Color::green() const{
     return m_channels[1];
 }
 
-color_t rast::Color::blue() const{
+color_t rstzr::Color::blue() const{
     return m_channels[2];
 }

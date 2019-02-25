@@ -5,7 +5,7 @@
 
 using color_t = unsigned char;
 
-namespace rast{
+namespace rstzr{
     
     class Color{
         
