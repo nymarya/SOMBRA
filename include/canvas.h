@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+
 #include "color.h"
 
 using component_t = unsigned char;
@@ -34,7 +35,7 @@ namespace rast{
             /**
              * @brief Get the pixel color from canvas
              */
-            Color pixel(const long x, const long y) const;
+            component_t pixel(const long x, const long y) const;
 
             /**
              * @brief Get the canvas width
@@ -75,7 +76,5 @@ namespace rast{
 
     
 }
-
-#include "canvas.inl"
 
 #endif

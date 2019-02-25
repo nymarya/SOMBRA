@@ -22,3 +22,15 @@ rast::Color& rast::Color::Color::operator=( const Color& other ){
 
 	return *this;
 }
+
+color_t rast::Color::red() const{
+    return m_channels[0];
+}
+
+color_t rast::Color::green() const{
+    return m_channels[1];
+}
+
+color_t rast::Color::blue() const{
+    return m_channels[2];
+}

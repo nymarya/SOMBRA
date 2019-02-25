@@ -10,7 +10,19 @@ rast::Canvas::Canvas(const size_t width, const size_t height)
 , m_fill_color (Color(0,0,0) )
 , m_bkg_color (Color (255,255,255))
 , m_pixels ( new component_t[(width*height*3)])
-{ /*empty*/ }
+{ 
+    
+    for (unsigned int x = 0; x < m_width; x++)
+  	{
+  	    for (unsigned int y=0; y < m_height ; y++){
+  		    m_pixels[ x + m_width * (y + 3 * 0) ] = m_bkg_color.red();
+  		    m_pixels[ x + m_width * (y + 3 * 1) ] = m_bkg_color.green();
+  		    m_pixels[ x + m_width * (y + 3 * 2) ] = m_bkg_color.blue();
+  		    
+  	    }
+  	}
+
+}
             
 /**
  * @brief Set the color of a pixel on the canvas
@@ -18,12 +30,15 @@ rast::Canvas::Canvas(const size_t width, const size_t height)
 //TODO: change x and y to Point2D
 void rast::Canvas::pixel (const long x, const long y, const Color &c){
    // m_pixels[(x*m_width)+y] = c;
+   m_pixels[x + m_width * (y + 3 * 0)] = c.red();
+   m_pixels[x + m_width * (y + 3 * 1)] = c.green();
+   m_pixels[x + m_width * (y + 3 * 2)] = c.blue();
 }
  
 /**
  * @brief Get the pixel color from canvas
  */
-rast::Color rast::Canvas::pixel (const long x, const long y) const{
+component_t rast::Canvas::pixel (const long x, const long y) const{
     return m_pixels[(x*m_width)+y];
 }
 
