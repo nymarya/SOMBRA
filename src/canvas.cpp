@@ -67,7 +67,13 @@ component_t* rast::Canvas::pixels (void) const{
  * @brief Draw a line between two points 2D
  * @see https://www.geeksforgeeks.org/dda-line-generation-algorithm-computer-graphics/
  */
-void rast::Canvas::lineDDA (const long x0, const long y0, const long x1, const long y1){
+void rast::Canvas::lineDDA ( rstzr::Point2D &p1,  rstzr::Point2D &p2, const Color &c){
+    coord_type x0 = p1.x();
+    coord_type x1 = p2.x();
+    coord_type y0 = p1.y();
+    coord_type y1 = p2.y();
+
+
     float dy = y1 - y0;
     float dx = x1 - x0;
     float y = y0;
@@ -81,7 +87,7 @@ void rast::Canvas::lineDDA (const long x0, const long y0, const long x1, const l
     float y_inc = dy / (float) steps; 
 
     for( int i = 0; i < steps; i++ ) {
-      pixel(round(x),round(y), m_fill_color);
+      pixel(round(x),round(y), c);
       y += y_inc;
       x += x_inc;
     }
@@ -90,14 +96,19 @@ void rast::Canvas::lineDDA (const long x0, const long y0, const long x1, const l
 /**
  * @brief Draw a line between two points 2D using the Bresenham algorithm.
  */
-void rast::Canvas::lineBresenham(const long x0, const long y0, const long x1, const long y1){
+void rast::Canvas::lineBresenham(rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c){
+    coord_type x0 = p1.x();
+    coord_type x1 = p2.x();
+    coord_type y0 = p1.y();
+    coord_type y1 = p2.y();
+
     float dy = y1 - y0;
     float dx = x1 - x0;
     float p = 2 *dy - dx;
     float y = y0;
     float x = x0;
 
-    pixel(x, y, m_fill_color);
+    pixel(x, y, c);
     for( x = x0; x < x1; x++ ) {
       if( p < 0){
         p += 2 * dy;
@@ -105,7 +116,7 @@ void rast::Canvas::lineBresenham(const long x0, const long y0, const long x1, co
         y++;
         p += 2 * dy - 2 * dx;
       }
-      pixel(x, y, m_fill_color);
+      pixel(x, y, c);
     }
 }
 
@@ -116,4 +127,11 @@ void rast::Canvas::bkg_color(const Color &c){
 
 void rast::Canvas::fill_color(const Color &c){
     m_fill_color = c;
+}
+
+/**
+ * @brief Get the color that will fill the object
+ */
+rast::Color rast::Canvas::fill_color() const{
+  return m_fill_color;
 }

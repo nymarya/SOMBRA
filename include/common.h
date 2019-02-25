@@ -3,4 +3,6 @@
 
 using component_t = unsigned char;
 
+typedef long coord_type;
+
 #endif

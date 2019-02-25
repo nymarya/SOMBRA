@@ -8,6 +8,7 @@
 #include <math.h>
 
 #include "color.h"
+#include "point.h"
 
 using component_t = unsigned char;
 
@@ -56,16 +57,21 @@ namespace rast{
             /**
              * @brief Draw a line between two points 2D
              */
-            void lineDDA (const long x, const long y, const long x1, const long y1);
+            void lineDDA (rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c );
 
             /**
              * @brief Draw a line between two points 2D using the brsenham algorithm
              */
-            void lineBresenham (const long x, const long y, const long x1, const long y1);
+            void lineBresenham (rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c);
             
             void bkg_color(const Color &c);
             
             void fill_color(const Color &c);
+
+            /**
+             * @brief Get the color that will fill the object
+             */
+            Color fill_color() const;
 
         private:
             size_t 	m_width;
