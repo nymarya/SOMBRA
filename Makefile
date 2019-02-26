@@ -8,6 +8,7 @@ CXX ?= g++
 SRC_PATH = src
 BUILD_PATH = build
 BIN_PATH = $(BUILD_PATH)
+GALLERY_PATH = gallery
 
 # executable #
 BIN_NAME = canvas.out
@@ -54,6 +55,7 @@ dirs:
 	@echo "Creating directories"
 	@mkdir -p $(dir $(OBJECTS))
 	@mkdir -p $(BIN_PATH)
+	@mkdir -p $(GALLERY_PATH)
 
 .PHONY: clean
 clean:
@@ -62,6 +64,7 @@ clean:
 	@echo "Deleting directories"
 	@$(RM) -r $(BUILD_PATH)
 	@$(RM) -r $(BIN_PATH)
+	@$(RM) -r $(GALLERY_PATH)
 
 # checks the executable and symlinks to the output
 .PHONY: all
