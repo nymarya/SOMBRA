@@ -168,19 +168,21 @@ void rstzr::Canvas::drawLineBresenham( rstzr::Point2D p1, rstzr::Point2D p2, con
         auto xi = 1;
         if (dx < 0){
           xi = -1;
-          dx = -dx;
+          //dx = -dx;
         }
         p = 2*dx - dy ;
-
+        
         for( y = y0; y < y1; y++ ) {
           pixel(x, y, c);
 
           if(p > 0) {
-            x += xi;
+            x++;
             p -= 2 * dy;
+          } else{
+              x--;
+          p += 2 * dx;
           }
             
-          p += 2 * dx;
 
         }
     }

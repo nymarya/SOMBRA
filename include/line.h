@@ -44,7 +44,11 @@ namespace rstzr{
 		private:
 
 			Point2D m_p1;
-			Point2D m_p2;	
+			Point2D m_p2;
+
+			coord_type y_max;
+			coord_type x_min;
+			float slope; //dx/dy	
 	};
 }
 
