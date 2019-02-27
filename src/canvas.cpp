@@ -209,8 +209,10 @@ void rstzr::Canvas::drawLineBresenham(rstzr::Point2D p1, rstzr::Point2D p2, cons
 
     float dy = y1 - y0;
     float dx = x1 - x0;
-    float p = 2 * dy - dx;
+    float p;
 
+    // Flag to verify wheter movement m1 is
+    // vertical, ie., which axis must be explored
     bool turn = abs(dx) - abs(dy) < 0;
 
     auto x = x0;
@@ -218,9 +220,14 @@ void rstzr::Canvas::drawLineBresenham(rstzr::Point2D p1, rstzr::Point2D p2, cons
     int i = 1;
     if (!turn)
     {
+        //If |dx| >= |dy|, x increases to left
+        // and y axis' movements depends on the sign of dy
+        // dy >= 0: move up
+        // dy < 0 : move down
+
         i = dy < 0 ? -1 : 1;
         dy = abs(dy);
-        p = 2 * abs(dy) - 2 * dx;
+        p = 2 * dy - 2 * dx;
 
         for (auto x = x0 + 1; x < x1; x++)
         {
@@ -238,8 +245,13 @@ void rstzr::Canvas::drawLineBresenham(rstzr::Point2D p1, rstzr::Point2D p2, cons
     }
     else
     {
+        //If |dx| < |dy|, y axis always moves up
+        // and x axis' move depends on the sign of dx
+        // dx >= 0: move to left
+        // dx < 0 : move to right
+
         i = dx < 0 ? -1 : 1;
-        dx = dx < 0 ? -dx : dx;
+        dx = abs(dx);
         for (auto y = y0 + 1; y < y1; y++)
         {
             if (p >= 0)
