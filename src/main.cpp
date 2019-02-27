@@ -3,6 +3,8 @@
 #include "../include/line.h"
 #include "../include/file.h"
 
+#include <vector>
+
 int main()
 {
      size_t width = 200;
@@ -10,7 +12,6 @@ int main()
 
      rstzr::Point2D p1(10, 10);
      rstzr::Point2D p2(10, 199);
-     //rstzr::Point2D p3 (199, 10);
      rstzr::Point2D p4(199, 100);
      rstzr::Point2D p5(100, 100);
      rstzr::Point2D p6(10, 100);
@@ -18,143 +19,86 @@ int main()
 
      rstzr::Color fill_color(0, 0, 0);
 
-     /**
-      * DDA
-      */
+     std::string dda = "_dda";
+     std::string bresenham = "_bres";
+     std::vector<std::string> filenames = {
+         "increasing",
+         "decreasing",
+         "45",
+         "hr",
+         "vr",
+     };
 
-     ///////////////////////////
-     /// increasing w/ error ///
-     ///////////////////////////
+     std::vector<std::vector<rstzr::Point2D>> points = {
+         {p2, p7},
+         {p1, p4},
+         {p1, p5},
+         {p1, p6},
+         {p1, p7}};
 
-     rstzr::Canvas c(width, height);
+     // Run tests for DDA
+     for (int i = 0; i < points.size(); i++)
+     {
+          rstzr::Canvas c(width, height);
 
-     c.line(p2, p7, fill_color, LINE_MODE::DDA);
+          c.line(points[i][0], points[i][1], fill_color, LINE_MODE::DDA);
 
-     rstzr::File file("increasing_dda_error");
+          rstzr::File file(filenames[i] + dda);
 
-     file.save_ppm(c);
+          file.save_ppm(c);
+     }
 
-     ///////////////////////////
-     /// decreasing w/ error ///
-     ///////////////////////////
+     // Run tests for Bresenham's algorithm
+     for (int i = 0; i < points.size(); i++)
+     {
+          rstzr::Canvas c(width, height);
 
-     rstzr::Canvas c1(width, height);
+          c.line(points[i][0], points[i][1], fill_color, LINE_MODE::BRESENHAM);
 
-     c1.line(p1, p4, fill_color, LINE_MODE::DDA);
+          rstzr::File file(filenames[i] + bresenham);
 
-     rstzr::File file1("decreasing_dda_error");
-
-     file1.save_ppm(c1);
-
-     ///////////////////////////
-     /// 45 degrees w/ error ///
-     ///////////////////////////
-
-     rstzr::Canvas c2(width, height);
-
-     c2.line(p1, p5, fill_color, LINE_MODE::DDA);
-
-     rstzr::File file2("45_dda_error");
-
-     file2.save_ppm(c2);
-
-     ///////////////////////////
-     /// horizontal w/ error ///
-     ///////////////////////////
-
-     rstzr::Canvas c3(width, height);
-
-     c3.line(p1, p6, fill_color, LINE_MODE::DDA);
-
-     rstzr::File file3("hr_dda_error");
-
-     file3.save_ppm(c3);
-
-     ///////////////////////////
-     ///  vertical w/ error ////
-     ///////////////////////////
-     rstzr::Canvas c4(width, height);
-
-     c4.line(p1, p7, fill_color, LINE_MODE::DDA);
-
-     rstzr::File file4("vr_dda_error");
-
-     file4.save_ppm(c4);
-
-     /**
-      * BRESENHAM
-      */
-
-     ///////////////////////////
-     /// increasing w/ error ///
-     ///////////////////////////
-
-     rstzr::Canvas c5(width, height);
-
-     c5.line(p2, p7, fill_color, LINE_MODE::BRESENHAM);
-
-     rstzr::File file5("increasing_bres_error");
-
-     file5.save_ppm(c5);
-
-     ///////////////////////////
-     /// decreasing w/ error ///
-     ///////////////////////////
-
-     rstzr::Canvas c6(width, height);
-
-     c6.line(p1, p4, fill_color, LINE_MODE::BRESENHAM);
-
-     rstzr::File file6("decreasing_bres_error");
-
-     file6.save_ppm(c6);
-
-     ///////////////////////////
-     /// 45 degrees w/ error ///
-     ///////////////////////////
-
-     rstzr::Canvas c7(width, height);
-
-     c7.line(p1, p5, fill_color, LINE_MODE::BRESENHAM);
-
-     rstzr::File file7("45_bres_error");
-
-     file7.save_ppm(c7);
-
-     ///////////////////////////
-     /// horizontal w/ error ///
-     ///////////////////////////
-
-     rstzr::Canvas c8(width, height);
-
-     c8.line(p1, p6, fill_color, LINE_MODE::BRESENHAM);
-
-     rstzr::File file8("hr_bres_error");
-
-     file8.save_ppm(c8);
-
-     ///////////////////////////
-     ///  vertical w/ error ////
-     ///////////////////////////
-     rstzr::Canvas c9(width, height);
-
-     c9.line(p1, p7, fill_color, LINE_MODE::BRESENHAM);
-
-     rstzr::File file9("vr_bres_error");
-
-     file9.save_ppm(c9);
+          file.save_ppm(c);
+     }
 
      ///////////////////////////
      //// COMPARE           ////
      ///////////////////////////
 
-     rstzr::Canvas c10(width, height);
+     rstzr::Canvas c(width, height);
 
-     c10.line(p2, p7, fill_color, LINE_MODE::COMPARE);
+     c.line(p2, p7, fill_color, LINE_MODE::COMPARE);
 
-     rstzr::File file10("vr_compare_error");
+     rstzr::File file("compare_dda_bres");
 
-     file10.save_ppm(c10);
+     file.save_ppm(c);
+
+     ///////////////////////////
+     //// COMPARE           ////
+     ///////////////////////////
+
+     rstzr::Point2D tl(1, 1);
+     rstzr::Point2D tr(1, 199);
+     rstzr::Point2D bl(199, 1);
+     rstzr::Point2D br(199, 199);
+     rstzr::Point2D m1(100, 1);
+     rstzr::Point2D m2(1, 100);
+     rstzr::Point2D m3(199, 100);
+     rstzr::Point2D m4(100, 199);
+
+     rstzr::Canvas c1(width, height);
+
+     c1.line(tl, tr, fill_color, LINE_MODE::BRESENHAM);
+     c1.line(tl, bl, fill_color, LINE_MODE::BRESENHAM);
+     c1.line(tl, br, fill_color, LINE_MODE::BRESENHAM);
+     c1.line(tr, bl, fill_color, LINE_MODE::BRESENHAM);
+     c1.line(bl, br, fill_color, LINE_MODE::BRESENHAM);
+     c1.line(tr, br, fill_color, LINE_MODE::BRESENHAM);
+     c1.line(m1, m4, fill_color, LINE_MODE::BRESENHAM);
+     c1.line(m2, m3, fill_color, LINE_MODE::BRESENHAM);
+
+     rstzr::File file1("bres");
+
+     file1.save_ppm(c1);
 
      return 0;
 }
