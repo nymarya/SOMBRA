@@ -81,13 +81,70 @@ void rstzr::Canvas::line(rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c,
 
 /**
  * @brief Draw a circle using the mid-point algorithm
+ * @see https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
  */
 void rstzr::Canvas::circle(Circle &circle, const Color &c)
 {
     //Get the center point
     auto center = circle.center();
-    auto x_center = center.x();
-    auto y_center = center.y();
+    auto x_centre = center.x();
+    auto y_centre = center.y();
+    auto radius = circle.radius();
+
+    //Get start point
+    coord_type x = 0;
+    coord_type y = radius;
+
+    // Get the parcial differences (deltas) of L and SE directions
+    auto dl = 3;
+    auto dse = -2 * radius + 5;
+    auto d = 1 - radius;
+
+    pixel(x + x_centre, y + y_centre, c);
+    // When radius is zero only a single
+    // point will be printed
+    if (radius > 0)
+    {
+        // Color the correspondent pixels
+        // in the other octants
+        pixel(x + x_centre, -y + y_centre, c);
+        pixel(y + x_centre, x + y_centre, c);
+        pixel(-y + x_centre, x + y_centre, c);
+    }
+    while (y > x)
+    {
+        if (d < 0)
+        {
+            d += dl;
+            dl += 2;
+            dse += 2;
+        }
+        else
+        {
+            d += dse;
+            dl += 2;
+            dse += 4;
+            y--;
+        }
+
+        x++;
+        pixel(x + x_centre, y + y_centre, c);
+        // Color the correspondent pixels
+        // in the other octants
+        pixel(-x + x_centre, y + y_centre, c);
+        pixel(x + x_centre, -y + y_centre, c);
+        pixel(-x + x_centre, -y + y_centre, c);
+
+        // If the generated point is on the line x = y then
+        // the perimeter points have already been printed
+        if (x != y)
+        {
+            pixel(y + x_centre, x + y_centre, c);
+            pixel(-y + x_centre, x + y_centre, c);
+            pixel(y + x_centre, -x + y_centre, c);
+            pixel(-y + x_centre, -x + y_centre, c);
+        }
+    }
 }
 
 void rstzr::Canvas::bkg_color(const Color &c)

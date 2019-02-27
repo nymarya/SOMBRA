@@ -5,6 +5,8 @@
 
 #include <vector>
 
+using namespace rstzr;
+
 int main()
 {
      size_t width = 200;
@@ -99,6 +101,23 @@ int main()
      rstzr::File file1("bres");
 
      file1.save_ppm(c1);
+
+     /////////////////////////
+     //////// CIRCLE  ////////
+     ////////////////////////
+     rstzr::Canvas c2(width, height);
+     rstzr::Circle circle(50, Point2D(100, 100));
+     c2.circle(circle, fill_color);
+     rstzr::File file2("circle");
+
+     file2.save_ppm(c2);
+
+     rstzr::Canvas c3(width, height);
+     rstzr::Circle circle1(60, Point2D(60, 100));
+     c3.circle(circle1, fill_color);
+     rstzr::File file3("circle2");
+
+     file3.save_ppm(c3);
 
      return 0;
 }
