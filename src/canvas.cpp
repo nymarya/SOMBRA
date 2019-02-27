@@ -79,6 +79,17 @@ void rstzr::Canvas::line(rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c,
     }
 }
 
+/**
+ * @brief Draw a circle using the mid-point algorithm
+ */
+void rstzr::Canvas::circle(Circle &circle, const Color &c)
+{
+    //Get the center point
+    auto center = circle.center();
+    auto x_center = center.x();
+    auto y_center = center.y();
+}
+
 void rstzr::Canvas::bkg_color(const Color &c)
 {
     m_bkg_color = c;

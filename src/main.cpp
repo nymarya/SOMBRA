@@ -37,7 +37,7 @@ int main()
          {p1, p7}};
 
      // Run tests for DDA
-     for (int i = 0; i < points.size(); i++)
+     for (auto i = 0u; i < points.size(); i++)
      {
           rstzr::Canvas c(width, height);
 
@@ -49,7 +49,7 @@ int main()
      }
 
      // Run tests for Bresenham's algorithm
-     for (int i = 0; i < points.size(); i++)
+     for (auto i = 0u; i < points.size(); i++)
      {
           rstzr::Canvas c(width, height);
 
