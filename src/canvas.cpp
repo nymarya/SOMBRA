@@ -267,3 +267,7 @@ void rstzr::Canvas::drawLineBresenham(rstzr::Point2D p1, rstzr::Point2D p2, cons
         }
     }
 }
+
+void rstzr::Canvas::antiliasing()
+{
+}
