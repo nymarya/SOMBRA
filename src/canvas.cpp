@@ -270,4 +270,43 @@ void rstzr::Canvas::drawLineBresenham(rstzr::Point2D p1, rstzr::Point2D p2, cons
 
 void rstzr::Canvas::antiliasing()
 {
+    // Run edge dectection
+    auto copy_pixels = m_pixels.get();
+    auto edges = canny(copy_pixels, m_width, m_height);
+    for (unsigned int x = 0; x < m_width; x++)
+    {
+        for (unsigned int y = 0; y < m_height; y++)
+        {
+            //If pixel is near edge and pixel is near other pixel of your source color,
+            //then calculate it’s opacity (1-transparency) factor
+            for (unsigned int z = 0; z < 3; z++)
+            {
+                auto red = m_width * y + x;
+                auto green = m_height * m_width + m_width * y + x;
+                auto blue = m_height * m_width * 2 + m_width * y + x;
+
+                auto bkg_red = m_bkg_color.red();
+                auto bkg_green = m_bkg_color.green();
+                auto bkg_blue = m_bkg_color.blue();
+
+                auto opc_red = (m_pixels[red] - bkg_red) / (m_fill_color.red() - bkg_red);
+                auto opc_green = (m_pixels[green] - bkg_green) / (m_fill_color.green() - bkg_green);
+                auto opc_blue = (m_pixels[blue] - bkg_blue) / (m_fill_color.blue() - bkg_blue);
+
+                //3) Now calculate your color to which you must replace current anti-aliased pixel:
+                m_pixels[red] = bkg_red * (1 - opc_red) + opc_red * m_fill_color.red();
+                m_pixels[green] = bkg_green * (1 - opc_green) + opc_green * m_fill_color.green();
+                m_pixels[blue] = bkg_blue * (1 - opc_blue) + opc_blue * m_fill_color.blue();
+            }
+        }
+    }
+
+    //If pixel is near edge and pixel is near other pixel of your source color,
+    //then calculate it’s opacity (1-transparency) factor- which will be
+    //opacity = (pixel_color-background_color)/(source_color-background_color)
+
+    //3) Now calculate your color to which you must replace current anti-aliased pixel:
+
+    //new_color = background_color * (1-opacity) + opacity * target_color
+    //And put this new_color instead of antialiased pixel.
 }

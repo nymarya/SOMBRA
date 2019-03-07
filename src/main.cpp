@@ -119,5 +119,26 @@ int main()
 
      file3.save_ppm(c3);
 
+     ///////////////////////////
+     //// ANTIALISING       ////
+     ///////////////////////////
+
+     Canvas c2(1000, 1000);
+
+     c2.line(tl, tr, fill_color, LINE_MODE::BRESENHAM);
+     c2.line(tl, bl, fill_color, LINE_MODE::BRESENHAM);
+     c2.line(tl, br, fill_color, LINE_MODE::BRESENHAM);
+     c2.line(tr, bl, fill_color, LINE_MODE::BRESENHAM);
+     c2.line(bl, br, fill_color, LINE_MODE::BRESENHAM);
+     c2.line(tr, br, fill_color, LINE_MODE::BRESENHAM);
+     c2.line(m1, m4, fill_color, LINE_MODE::BRESENHAM);
+     c2.line(m2, m3, fill_color, LINE_MODE::BRESENHAM);
+
+     c2.antiliasing();
+
+     File file1("bres_antilising");
+
+     file1.save_ppm(c1);
+
      return 0;
 }
