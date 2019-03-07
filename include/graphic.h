@@ -15,7 +15,7 @@ class Graphic
 
   private:
     /* data */
-    Color m_fill_color, m_background_color;
+    Color m_fill_color, m_background_color, m_stroke_color;
 };
 
 } // namespace rstzr

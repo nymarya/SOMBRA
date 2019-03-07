@@ -1,10 +1,10 @@
-#include "../filter.h"
+#include "filter.h"
 
 #define sig 0.5
 #define hi 200
 #define lo 50
 
-void rstzr::gray(component_t matrix[], size_t width, size_t height)
+void rstzr::gray(component_t matrix[], component_t pic[], size_t width, size_t height)
 {
 
     for (unsigned int x = 0; x < width; x++)
@@ -14,10 +14,10 @@ void rstzr::gray(component_t matrix[], size_t width, size_t height)
             for (unsigned int z = 0; z < 3; z++)
             {
                 auto red = matrix[width * y + x];
-                auto green = matrix[m_height * m_width + m_width * y + x];
-                auto blue = matrix[m_height * m_width * 2 + m_width * y + x];
+                auto green = matrix[height * width + width * y + x];
+                auto blue = matrix[height * width * 2 + width * y + x];
 
-                matrix[width * y + x] gray = (int)((0.299 * red) + (0.587 * green) + (0.144 * blue)
+                pic[width * y + x] = (int)((0.299 * red) + (0.587 * green) + (0.144 * blue));
             }
         }
     }
@@ -26,7 +26,7 @@ void rstzr::gray(component_t matrix[], size_t width, size_t height)
 /**
  * Code from: https://github.com/sorazy/canny 
  */
-void rstzr::canny(component_t matrix[], size_t width, size_t height)
+std::vector<int> rstzr::canny(component_t matrix[], size_t width, size_t height)
 {
     size_t size = width * height;
 
@@ -34,34 +34,35 @@ void rstzr::canny(component_t matrix[], size_t width, size_t height)
     gray(matrix, pic, width, height);
 
     auto mag = new component_t[size];
-    auto x = new component_t[size];
-    auto y = new component_t[size];
+    auto x = new double[size];
+    auto y = new double[size];
+    auto final = new component_t[size];
 
     // Create the magnitute matrix
-    magnitude_matrix(pic, mag, x, y);
+    magnitude_matrix(pic, mag, x, y, width, height);
 
     // Get all the peaks and store them in vector
-    std::map<int, int> *peaks;
-    vector<Point2D *> v = peak_detection(mag, peaks, x, y, width);
+    std::map<int, int> peaks;
+    std::vector<Point2D *> v = peak_detection(mag, peaks, x, y, width, height);
 
     // Go through the vector and call the recursive function and each point. If the value
     // in the mag matrix is hi, then immediately accept it in final. If lo, then immediately
     // reject. If between lo and hi, then check if it's next to a hi pixel using recursion
-    std::map<int, int> *h;
+    std::map<int, int> h;
     int a, b;
-    Vector<int> result;
-    for (int i = 0; i < v.size(); i++)
+    std::vector<int> result;
+    for (auto i = 0; i < v.size(); i++)
     {
-        a = v.at(i)->x;
-        b = v.at(i)->y;
+        a = v.at(i)->x();
+        b = v.at(i)->y();
 
         if (mag[a + b * width] >= hi)
         {
-            result->push_back(a + b * width);
-            final[a][b] = 255;
+            result.push_back(a + b * width);
+            final[a + b * width] = 255;
         }
-        else if (mag[a][b] < lo)
-            final[a][b] = 0;
+        else if (mag[a + b * width] < lo)
+            final[a + b * width] = 0;
         else
             recursiveDT(mag, final, h, peaks, a, b, 0, height, width, result);
     }
@@ -73,7 +74,8 @@ void rstzr::canny(component_t matrix[], size_t width, size_t height)
     return result;
 }
 
-void magnitude_matrix(component_t pic[], double *mag, double *x, double *y, component_t width)
+void rstzr::magnitude_matrix(component_t pic[], component_t *mag, double *x, double *y,
+                             component_t width, component_t height)
 {
     int dim = 6 * sig + 1, cent = dim / 2;
     double maskx[dim][dim], masky[dim][dim];
@@ -125,7 +127,7 @@ void magnitude_matrix(component_t pic[], double *mag, double *x, double *y, comp
     {
         for (int j = 0; j < width; j++)
         {
-            mags = sqrt((x[i][j] * x[i][j]) + (y[i][j] * y[i][j]));
+            mags = sqrt((x[i + j * width] * x[i + j * width]) + (y[i + j * width] * y[i + j * width]));
 
             if (mags > maxVal)
                 maxVal = mags;
@@ -137,7 +139,7 @@ void magnitude_matrix(component_t pic[], double *mag, double *x, double *y, comp
     // Make sure all the magnitude values are between 0-255
     for (int i = 0; i < height; i++)
         for (int j = 0; j < width; j++)
-            mag[[i + j * width]  = mag[[i + j * width] / maxVal * 255;
+            mag[i + j * width] = mag[i + j * width] / maxVal * 255;
 
     return;
 }
@@ -145,14 +147,15 @@ void magnitude_matrix(component_t pic[], double *mag, double *x, double *y, comp
 // ================================ Peaks Detection ================================
 // The formula for slope is Δy/Δx. We have Δy and Δx from the scanning convulution
 // above. We can get the slope by dividing the two. We'll store all the Point2Ds that
-// are greater than both it's neighbors in the direction of the slope into a vector.
+// are greater than both it's neighbors in the direction of the slope into a std::vector.
 // We can calculate the direction of the slope using the tan(x) function. We'll also
 // store the peaks in a HashMap for O(1) searches in the recursiveDT function later.
 // ================================ Peaks Detection ================================
-vector<Point *> peak_detection(double **mag, HashMap *h, double **x, double **y)
+std::vector<rstzr::Point2D *> rstzr::peak_detection(component_t *mag, std::map<int, int> &h, double *x,
+                                                    double *y, component_t width, component_t height)
 {
     double slope = 0;
-    vector<Point2D *> v;
+    std::vector<rstzr::Point2D *> v;
     for (int i = 1; i < height - 1; i++)
     {
         for (int j = 1; j < width - 1; j++)
@@ -169,7 +172,7 @@ vector<Point *> peak_detection(double **mag, HashMap *h, double **x, double **y)
                 if (mag[i + j * width] > mag[i + (j - 1) * width] && mag[i + (j * width)] > mag[i + (j + 1) * width])
                 {
                     v.push_back(new Point2D(i, j));
-                    h->insert(i, j);
+                    h.insert(std::pair<int, int>(i, j));
                 }
             }
             else if (slope <= tan(67.5) && slope > tan(22.5))
@@ -178,16 +181,16 @@ vector<Point *> peak_detection(double **mag, HashMap *h, double **x, double **y)
                     mag[i + j * width] > mag[i + 1 + (j + 1) * width])
                 {
                     v.push_back(new Point2D(i, j));
-                    h->insert(i, j);
+                    h.insert(std::pair<int, int>(i, j));
                 }
             }
             else if (slope <= tan(-22.5) && slope > tan(-67.5))
             {
-                if (mag[i + j * width > mag[i + 1 + (j - 1) * width] && 
-                mag[i + j * width] > mag[i - 1 + (j + 1) * width])
+                if (mag[i + j * width] > mag[i + 1 + (j - 1) * width] &&
+                    mag[i + j * width] > mag[i - 1 + (j + 1) * width])
                 {
                     v.push_back(new Point2D(i, j));
-                    h->insert(i, j);
+                    h.insert(std::pair<int, int>(i, j));
                 }
             }
             else
@@ -196,7 +199,7 @@ vector<Point *> peak_detection(double **mag, HashMap *h, double **x, double **y)
                     mag[i + j * width] > mag[i + 1 + j * width])
                 {
                     v.push_back(new Point2D(i, j));
-                    h->insert(i, j);
+                    h.insert(std::pair<int, int>(i, j));
                 }
             }
         }
@@ -212,18 +215,19 @@ vector<Point *> peak_detection(double **mag, HashMap *h, double **x, double **y)
 // range and swith all those to ON in final. We'll stop as soon as all the pixels are
 // either already processed or less than the 'lo' threshold.
 // ======================== Hysteresis & Double Thresholding ========================
-void recursiveDT(component_t mag[], double **final, HashMap *h, HashMap *peaks, int a, int b,
-                 int flag, size_t height, size_t width, Vector &result)
+void rstzr::recursiveDT(component_t mag[], component_t *final, std::map<int, int> &h,
+                        std::map<int, int> &peaks, int a, int b, int flag, size_t height,
+                        size_t width, std::vector<int> &result)
 {
     // If the pixel value is < lo, out-of-bounds, or at a point we've visited before,
     // then exit the funciton.
     if (mag[a + b * width] < lo || a < 0 || b < 0 || a >= height || b >= width)
         return;
-    if (h->contains(a, b))
+    if (h.find(a) != h.end())
         return;
 
     // Insert the current pixel so we know we've been here before.
-    h->insert(a, b);
+    h.insert(std::pair<int, int>(a, b));
 
     // If flag = 0, that means that this is the first pixel of the "series" that
     // we're looking at. We're going to look for a pixel in "final" that's set to
@@ -237,7 +241,7 @@ void recursiveDT(component_t mag[], double **final, HashMap *h, HashMap *peaks, 
                 if (final[a + p + (b + q) * width] == 255)
                 {
                     final[a + b * width] = 255;
-                    result->push_back(a + b * width);
+                    result.push_back(a + b * width);
                     flag = 1;
                     break;
                 }
@@ -257,10 +261,10 @@ void recursiveDT(component_t mag[], double **final, HashMap *h, HashMap *peaks, 
         {
             for (int q = -1; q <= 1; q++)
             {
-                if (mag[a + p + (b + q) * width] >= lo && peaks->contains(a + p, b + q))
+                if (mag[a + p + (b + q) * width] >= lo && peaks.find(a + p) != peaks.end())
                 {
                     recursiveDT(mag, final, h, peaks, a + p, b + q, 1, height, width, result);
-                    result->push_back(a + b * width);
+                    result.push_back(a + b * width);
                 }
             }
         }
