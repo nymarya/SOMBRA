@@ -296,6 +296,20 @@ bool rstzr::Canvas::check_pixel(size_t x, size_t y, std::vector<int> &edges)
             check = true;
         if ((x - 1 + (y - 1 * m_width)) == i)
             check = true;
+
+        if (check)
+        {
+            //TODO: change m_fill_color to m_stroke_color
+            auto red = m_width * y + x;
+            auto green = m_height * m_width + m_width * y + x;
+            auto blue = m_height * m_width * 2 + m_width * y + x;
+
+            auto n_green = m_height * m_width + i;
+            auto n_blue = m_height * m_width * 2 + i;
+            check = check & (m_pixels[red] == m_fill_color.red());
+            check = check & (m_pixels[green] == m_fill_color.green());
+            check = check & (m_pixels[blue] == m_fill_color.blue());
+        }
     }
 
     if (check)
@@ -304,6 +318,7 @@ bool rstzr::Canvas::check_pixel(size_t x, size_t y, std::vector<int> &edges)
         auto red = m_width * y + x;
         auto green = m_height * m_width + m_width * y + x;
         auto blue = m_height * m_width * 2 + m_width * y + x;
+
         check = check & (m_pixels[red] == m_fill_color.red());
         check = check & (m_pixels[green] == m_fill_color.green());
         check = check & (m_pixels[blue] == m_fill_color.blue());
