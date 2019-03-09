@@ -9,15 +9,15 @@ using namespace rstzr;
 
 int main()
 {
-     size_t width = 200;
-     size_t height = 200;
+     size_t width = 1000;
+     size_t height = 1000;
 
      rstzr::Point2D p1(10, 10);
-     rstzr::Point2D p2(10, 199);
-     rstzr::Point2D p4(199, 100);
-     rstzr::Point2D p5(100, 100);
-     rstzr::Point2D p6(10, 100);
-     rstzr::Point2D p7(199, 10);
+     rstzr::Point2D p2(10, 999);
+     rstzr::Point2D p4(999, 500);
+     rstzr::Point2D p5(500, 500);
+     rstzr::Point2D p6(10, 500);
+     rstzr::Point2D p7(999, 10);
 
      rstzr::Color fill_color(0, 0, 0);
 
@@ -79,13 +79,13 @@ int main()
      ///////////////////////////
 
      rstzr::Point2D tl(1, 1);
-     rstzr::Point2D tr(1, 199);
-     rstzr::Point2D bl(199, 1);
-     rstzr::Point2D br(199, 199);
-     rstzr::Point2D m1(100, 1);
-     rstzr::Point2D m2(1, 100);
-     rstzr::Point2D m3(199, 100);
-     rstzr::Point2D m4(100, 199);
+     rstzr::Point2D tr(1, 999);
+     rstzr::Point2D bl(999, 1);
+     rstzr::Point2D br(999, 999);
+     rstzr::Point2D m1(500, 1);
+     rstzr::Point2D m2(1, 500);
+     rstzr::Point2D m3(999, 500);
+     rstzr::Point2D m4(500, 999);
 
      rstzr::Canvas c1(width, height);
 
@@ -123,22 +123,24 @@ int main()
      //// ANTIALISING       ////
      ///////////////////////////
 
-     Canvas c2(1000, 1000);
+     Canvas c4(width, height);
 
-     c2.line(tl, tr, fill_color, LINE_MODE::BRESENHAM);
-     c2.line(tl, bl, fill_color, LINE_MODE::BRESENHAM);
-     c2.line(tl, br, fill_color, LINE_MODE::BRESENHAM);
-     c2.line(tr, bl, fill_color, LINE_MODE::BRESENHAM);
-     c2.line(bl, br, fill_color, LINE_MODE::BRESENHAM);
-     c2.line(tr, br, fill_color, LINE_MODE::BRESENHAM);
-     c2.line(m1, m4, fill_color, LINE_MODE::BRESENHAM);
-     c2.line(m2, m3, fill_color, LINE_MODE::BRESENHAM);
+     /**
+     c4.line(tl, tr, fill_color, LINE_MODE::BRESENHAM);
+     c4.line(tl, bl, fill_color, LINE_MODE::BRESENHAM);
+     c4.line(tl, br, fill_color, LINE_MODE::BRESENHAM);
+     c4.line(tr, bl, fill_color, LINE_MODE::BRESENHAM);
+     c4.line(bl, br, fill_color, LINE_MODE::BRESENHAM);
+     c4.line(tr, br, fill_color, LINE_MODE::BRESENHAM);
+     c4.line(m1, m4, fill_color, LINE_MODE::BRESENHAM);
+     c4.line(m2, m3, fill_color, LINE_MODE::BRESENHAM);**/
+     c4.line(p1, p4, fill_color, LINE_MODE::BRESENHAM);
 
-     c2.antiliasing();
+     c4.antiliasing();
 
-     File file1("bres_antilising");
+     File file4("bres_antilising");
 
-     file1.save_ppm(c1);
+     file4.save_ppm(c4);
 
      return 0;
 }

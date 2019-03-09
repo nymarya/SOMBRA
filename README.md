@@ -5,7 +5,7 @@ Simple Objects Minimal Bidimensional RAsterizer
 
     - [x] Segmento de linha
     - [ ] Polilinha
-- [ ] Círculo 
+- [x] Círculo 
 - [ ] Semi-círculo
 - [ ] Elipse [opcional]
 - [ ] Preenchimento
