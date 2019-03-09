@@ -330,7 +330,20 @@ bool rstzr::Canvas::check_pixel(size_t x, size_t y, std::vector<int> &edges)
 void rstzr::Canvas::antiliasing()
 {
     // Run edge dectection
-    std::vector<component_t> copy_pixels(*m_pixels.get());
+    std::cout << "anti\n";
+    std::vector<component_t> copy_pixels;
+    for (unsigned int x = 0; x < m_width; x++)
+    {
+        for (unsigned int y = 0; y < m_height; y++)
+        {
+            for (int z = 0; z < 3; z++)
+            {
+                auto index = m_height * m_width * z + m_width * y + x;
+                copy_pixels.push_back(m_pixels[index]);
+            }
+        }
+    }
+    std::cout << "q " << copy_pixels.size();
     auto edges = sobel(copy_pixels, m_width, m_height);
     std::cout << "ed " << edges.size();
     for (unsigned int x = 0; x < m_width; x++)

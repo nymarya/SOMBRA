@@ -23,7 +23,7 @@ std::vector<Point2D *> peak_detection(std::vector<component_t> &mag, std::map<in
 void recursiveDT(std::vector<component_t> &mag, component_t *final, std::map<int, int> &h, std::map<int, int> &peaks,
                  int a, int b, int flag, size_t height, size_t width, std::vector<int> &result);
 
-std::vector<int> sobel(std::vector<component_t> matrix, size_t, size_t);
+std::vector<int> sobel(std::vector<component_t> &matrix, size_t, size_t);
 } // namespace rstzr
 
 #endif

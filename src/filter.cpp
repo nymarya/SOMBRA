@@ -306,29 +306,34 @@ void rstzr::recursiveDT(std::vector<component_t> &mag, component_t *final, std::
     return;
 }
 
-std::vector<int> rstzr::sobel(std::vector<component_t> matrix, size_t width, size_t height)
+std::vector<int> rstzr::sobel(std::vector<component_t> &matrix, size_t width, size_t height)
 {
+    std::cout << "sob\n";
     std::vector<int> result;
 
     int maskx[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
     int masky[3][3] = {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}};
 
+    std::cout << "a\n";
     auto size = width * height;
     // These matrices will hold the integer values of the input image
-    double x[height][width], y[height][width], mag[height][width];
 
+    std::cout << "aa\n";
     // Reading in the input image
     std::vector<component_t> pic(size);
     gray(matrix, pic, width, height);
+
+    int mag[height][width];
 
     // mr stands for maskRadius
     // This does the scanning convultion of the masks declared above, and stores
     // the values in the matrices outputx and outputy
     int mr = 1;
     int maxx = 0, maxy = 0;
-    for (int i = 0; i < height; i++)
+    std::cout << "for1\n";
+    for (auto i = 0u; i < height; i++)
     {
-        for (int j = 0; j < width; j++)
+        for (auto j = 0u; j < width; j++)
         {
             auto sumx = 0;
             auto sumy = 0;
@@ -351,39 +356,43 @@ std::vector<int> rstzr::sobel(std::vector<component_t> matrix, size_t width, siz
             if (sumy > maxy)
                 maxy = sumy;
 
-            x[i][j] = sumx;
-            y[i][j] = sumy;
+            matrix[i * width + j] = sumx;
+            mag[i][j] = sumy;
         }
     }
 
     // Make sure all the values are between 0-255
-    for (int i = 0; i < height; i++)
+    std::cout << "for2\n";
+    for (auto i = 0u; i < height; i++)
     {
-        for (int j = 0; j < width; j++)
+        for (auto j = 0u; j < width; j++)
         {
-            x[i][j] = x[i][j] / maxx * 255;
-            y[i][j] = y[i][j] / maxy * 255;
+            matrix[i * width + j] = matrix[i * width + j] / maxx * 255;
+            mag[i][j] = mag[i][j] / maxy * 255;
         }
     }
 
     // Find gradient and maxval
     int maxVal = 0;
+    std::cout << "for3\n";
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            mag[i][j] = sqrt((x[i][j] * x[i][j]) + (y[i][j] * y[i][j]));
+            mag[i][j] = sqrt((matrix[i * width + j] * matrix[i * width + j]) + (mag[i][j] * mag[i][j]));
 
             if (mag[i][j] > maxVal)
                 maxVal = mag[i][j];
         }
     }
 
+    std::cout << "for4\n";
     // Make sure all the magnitude values are between 0-255
     for (int i = 0; i < height; i++)
         for (int j = 0; j < width; j++)
             mag[i][j] = mag[i][j] / maxVal * 255;
 
+    std::cout << "for5\n";
     // Make sure to cast back to char before outputting
     // Also to avoid any wonky results, get rid of any decimals by casting to int first
     for (int i = 0; i < height; i++)

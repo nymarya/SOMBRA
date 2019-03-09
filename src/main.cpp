@@ -37,7 +37,7 @@ int main()
          {p1, p5},
          {p1, p6},
          {p1, p7}};
-
+     /**
      // Run tests for DDA
      for (auto i = 0u; i < points.size(); i++)
      {
@@ -125,22 +125,15 @@ int main()
 
      Canvas c4(width, height);
 
-     /**
-     c4.line(tl, tr, fill_color, LINE_MODE::BRESENHAM);
-     c4.line(tl, bl, fill_color, LINE_MODE::BRESENHAM);
-     c4.line(tl, br, fill_color, LINE_MODE::BRESENHAM);
-     c4.line(tr, bl, fill_color, LINE_MODE::BRESENHAM);
-     c4.line(bl, br, fill_color, LINE_MODE::BRESENHAM);
-     c4.line(tr, br, fill_color, LINE_MODE::BRESENHAM);
-     c4.line(m1, m4, fill_color, LINE_MODE::BRESENHAM);
-     c4.line(m2, m3, fill_color, LINE_MODE::BRESENHAM);**/
-     c4.line(p1, p4, fill_color, LINE_MODE::BRESENHAM);
+     rstzr::Circle circle(200, Point2D(500, 500));
+     c4.circle(circle, fill_color);
 
-     c4.antiliasing();
+     //c4.antiliasing();
 
-     File file4("bres_antilising");
+     File file4("bres_circle");
 
      file4.save_ppm(c4);
+     **/
 
      return 0;
 }
