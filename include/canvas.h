@@ -66,13 +66,22 @@ class Canvas
 
    void fill_color(const Color &c);
 
-   void draw(Graphic &g, LINE_MODE mode = LINE_MODE::BRESENHAM);
-
    /**
      * @brief Get the color that will fill the object
      */
    Color fill_color() const;
 
+   /**
+    * @brief Set the color that will draw the object.
+    */
+   void stroke_color(const Color &c);
+
+   /**
+     * @brief Get the color that will draw the object
+     */
+   Color stroke_color() const;
+
+   void draw(Graphic &g, LINE_MODE mode = LINE_MODE::BRESENHAM);
    /**
    * Checks whether pixel is near edge and pixels is
    * near other pixel of your source color.
@@ -89,7 +98,7 @@ class Canvas
    //n x m x 3
    std::unique_ptr<component_t[]> m_pixels;
 
-   Color m_fill_color;
+   Color m_fill_color, m_stroke_color;
 
    Color m_bkg_color;
 };

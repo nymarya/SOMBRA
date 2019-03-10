@@ -5,7 +5,9 @@ using component_t = unsigned char;
  * @brief Constructor Default
  */
 rstzr::Canvas::Canvas(const size_t width, const size_t height)
-    : m_width(width), m_height(height), m_pixels(new component_t[(width * height * 3)]), m_fill_color(Color(0, 0, 0)), m_bkg_color(Color(255, 255, 255))
+    : m_width(width), m_height(height), m_pixels(new component_t[(width * height * 3)]),
+      m_stroke_color(Color(0, 0, 0)), m_bkg_color(Color(255, 255, 255)),
+      m_fill_color(Color(255, 0, 0))
 {
 
     for (unsigned int x = 0; x < m_width; x++)
@@ -80,6 +82,22 @@ rstzr::Color rstzr::Canvas::fill_color() const
 }
 
 /**
+ * @brief Get the color that will draw the object
+ */
+void rstzr::Canvas::stroke_color(const Color &c)
+{
+    m_stroke_color = c;
+}
+
+/**
+ * @brief Get the color that will draw the object
+ */
+rstzr::Color rstzr::Canvas::stroke_color() const
+{
+    return m_stroke_color;
+}
+
+/**
  * Checks whether pixel is near edge and pixels is
  * near other pixel of your source color.
  */
@@ -115,11 +133,9 @@ bool rstzr::Canvas::check_pixel(size_t x, size_t y, std::vector<int> &edges)
             auto green = m_height * m_width + m_width * y + x;
             auto blue = m_height * m_width * 2 + m_width * y + x;
 
-            auto n_green = m_height * m_width + i;
-            auto n_blue = m_height * m_width * 2 + i;
-            check = check & (m_pixels[red] == m_fill_color.red());
-            check = check & (m_pixels[green] == m_fill_color.green());
-            check = check & (m_pixels[blue] == m_fill_color.blue());
+            check = check & (m_pixels[red] == m_stroke_color.red());
+            check = check & (m_pixels[green] == m_stroke_color.green());
+            check = check & (m_pixels[blue] == m_stroke_color.blue());
         }
     }
 
@@ -130,9 +146,9 @@ bool rstzr::Canvas::check_pixel(size_t x, size_t y, std::vector<int> &edges)
         auto green = m_height * m_width + m_width * y + x;
         auto blue = m_height * m_width * 2 + m_width * y + x;
 
-        check = check & (m_pixels[red] == m_fill_color.red());
-        check = check & (m_pixels[green] == m_fill_color.green());
-        check = check & (m_pixels[blue] == m_fill_color.blue());
+        check = check & (m_pixels[red] == m_stroke_color.red());
+        check = check & (m_pixels[green] == m_stroke_color.green());
+        check = check & (m_pixels[blue] == m_stroke_color.blue());
     }
 
     return check;
@@ -175,15 +191,14 @@ void rstzr::Canvas::antiliasing()
                     auto bkg_green = m_bkg_color.green();
                     auto bkg_blue = m_bkg_color.blue();
 
-                    //TODO: change m_fill_color to m_stroke_color
-                    auto opc_red = (m_pixels[red] - bkg_red) / (m_fill_color.red() - bkg_red);
-                    auto opc_green = (m_pixels[green] - bkg_green) / (m_fill_color.green() - bkg_green);
-                    auto opc_blue = (m_pixels[blue] - bkg_blue) / (m_fill_color.blue() - bkg_blue);
+                    auto opc_red = (m_pixels[red] - bkg_red) / (m_stroke_color.red() - bkg_red);
+                    auto opc_green = (m_pixels[green] - bkg_green) / (m_stroke_color.green() - bkg_green);
+                    auto opc_blue = (m_pixels[blue] - bkg_blue) / (m_stroke_color.blue() - bkg_blue);
 
                     //3) Now calculate your color to which you must replace current anti-aliased pixel:
-                    m_pixels[red] = bkg_red * (1 - opc_red) + opc_red * m_fill_color.red();
-                    m_pixels[green] = bkg_green * (1 - opc_green) + opc_green * m_fill_color.green();
-                    m_pixels[blue] = bkg_blue * (1 - opc_blue) + opc_blue * m_fill_color.blue();
+                    m_pixels[red] = bkg_red * (1 - opc_red) + opc_red * m_stroke_color.red();
+                    m_pixels[green] = bkg_green * (1 - opc_green) + opc_green * m_stroke_color.green();
+                    m_pixels[blue] = bkg_blue * (1 - opc_blue) + opc_blue * m_stroke_color.blue();
                 }
             }
         }
@@ -201,5 +216,7 @@ void rstzr::Canvas::antiliasing()
 
 void rstzr::Canvas::draw(Graphic &g, LINE_MODE mode)
 {
+    // Set the default color if none is selected
+    g.stroke_color(m_stroke_color);
     g.draw(*this, mode);
 }
