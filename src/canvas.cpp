@@ -216,7 +216,5 @@ void rstzr::Canvas::antiliasing()
 
 void rstzr::Canvas::draw(Graphic &g, LINE_MODE mode)
 {
-    // Set the default color if none is selected
-    g.stroke_color(m_stroke_color);
     g.draw(*this, mode);
 }
