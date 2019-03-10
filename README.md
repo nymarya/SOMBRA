@@ -11,5 +11,5 @@ Simple Objects Minimal Bidimensional RAsterizer
 - [ ] Preenchimento
     - [ ] Scan-line approach
     - [ ] Fill
-- [ ] Antialiasing
+- [x] Antialiasing
 - [ ] Camadas: um objeto sobrescrever o outro

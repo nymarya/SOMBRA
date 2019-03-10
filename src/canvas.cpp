@@ -61,92 +61,6 @@ component_t *rstzr::Canvas::pixels(void) const
     return m_pixels.get();
 }
 
-/**
- * @brief Draw a line between two points 2D.
- */
-void rstzr::Canvas::line(rstzr::Point2D &p1, rstzr::Point2D &p2, const Color &c, LINE_MODE mode)
-{
-
-    //Draw line based on choosen type
-    if (mode == LINE_MODE::DDA)
-        drawLineDDA(p1, p2, c);
-    else if (mode == LINE_MODE::BRESENHAM)
-        drawLineBresenham(p1, p2, c);
-    else if (mode == LINE_MODE::COMPARE)
-    {
-        drawLineDDA(p1, p2, Color(0, 0, 255));
-        drawLineBresenham(p1, p2, Color(0, 255, 0));
-    }
-}
-
-/**
- * @brief Draw a circle using the mid-point algorithm
- * @see https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
- */
-void rstzr::Canvas::circle(Circle &circle, const Color &c)
-{
-    //Get the center point
-    auto center = circle.center();
-    auto x_centre = center.x();
-    auto y_centre = center.y();
-    auto radius = circle.radius();
-
-    //Get start point
-    coord_type x = 0;
-    coord_type y = radius;
-
-    // Get the parcial differences (deltas) of L and SE directions
-    auto dl = 3;
-    auto dse = -2 * radius + 5;
-    auto d = 1 - radius;
-
-    pixel(x + x_centre, y + y_centre, c);
-    // When radius is zero only a single
-    // point will be printed
-    if (radius > 0)
-    {
-        // Color the correspondent pixels
-        // in the other octants
-        pixel(x + x_centre, -y + y_centre, c);
-        pixel(y + x_centre, x + y_centre, c);
-        pixel(-y + x_centre, x + y_centre, c);
-    }
-    while (y > x)
-    {
-        if (d < 0)
-        {
-            d += dl;
-            dl += 2;
-            dse += 2;
-        }
-        else
-        {
-            d += dse;
-            dl += 2;
-            dse += 4;
-            y--;
-        }
-
-        x++;
-        pixel(x + x_centre, y + y_centre, c);
-        // Color the correspondent pixels
-        // in the other octants
-        pixel(-x + x_centre, y + y_centre, c);
-        pixel(x + x_centre, -y + y_centre, c);
-        pixel(-x + x_centre, -y + y_centre, c);
-
-        // If the generated point is on the line x = y then
-        // the perimeter points have already been printed
-        if (x != y)
-        {
-            pixel(y + x_centre, x + y_centre, c);
-            pixel(-y + x_centre, x + y_centre, c);
-            pixel(y + x_centre, -x + y_centre, c);
-            pixel(-y + x_centre, -x + y_centre, c);
-        }
-    }
-}
-
 void rstzr::Canvas::bkg_color(const Color &c)
 {
     m_bkg_color = c;
@@ -163,109 +77,6 @@ void rstzr::Canvas::fill_color(const Color &c)
 rstzr::Color rstzr::Canvas::fill_color() const
 {
     return m_fill_color;
-}
-
-/**
- * @brief Draw a line between two points 2D
- * @see https://www.geeksforgeeks.org/dda-line-generation-algorithm-computer-graphics/
- */
-void rstzr::Canvas::drawLineDDA(rstzr::Point2D p1, rstzr::Point2D p2, const Color &c)
-{
-    coord_type x0 = p1.x();
-    coord_type x1 = p2.x();
-    coord_type y0 = p1.y();
-    coord_type y1 = p2.y();
-
-    float dy = y1 - y0;
-    float dx = x1 - x0;
-    float y = y0;
-    float x = x0;
-
-    // calculate steps required for generating pixels
-    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-
-    // calculate increment in x & y for each steps
-    float x_inc = dx / (float)steps;
-    float y_inc = dy / (float)steps;
-
-    for (int i = 0; i < steps; i++)
-    {
-        pixel(x, y, c);
-        y += y_inc;
-        x += x_inc;
-    }
-}
-
-/**
- * @brief Draw a line between two points 2D using the brsenham algorithm
- * @see https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
- */
-void rstzr::Canvas::drawLineBresenham(rstzr::Point2D p1, rstzr::Point2D p2, const Color &c)
-{
-    coord_type x0 = p1.x();
-    coord_type x1 = p2.x();
-    coord_type y0 = p1.y();
-    coord_type y1 = p2.y();
-
-    float dy = y1 - y0;
-    float dx = x1 - x0;
-    float p;
-
-    // Flag to verify wheter movement m1 is
-    // vertical, ie., which axis must be explored
-    bool turn = abs(dx) - abs(dy) < 0;
-
-    auto x = x0;
-    auto y = y0;
-    int i = 1;
-    if (!turn)
-    {
-        //If |dx| >= |dy|, x increases to left
-        // and y axis' movements depends on the sign of dy
-        // dy >= 0: move up
-        // dy < 0 : move down
-
-        i = dy < 0 ? -1 : 1;
-        dy = abs(dy);
-        p = 2 * dy - 2 * dx;
-
-        for (auto x = x0 + 1; x < x1; x++)
-        {
-            if (p >= 0)
-            {
-                y += i;
-                p += 2 * abs(dy) - 2 * dx;
-            }
-            else
-            {
-                p += 2 * dy;
-            }
-            pixel(x, y, c);
-        }
-    }
-    else
-    {
-        //If |dx| < |dy|, y axis always moves up
-        // and x axis' move depends on the sign of dx
-        // dx >= 0: move to left
-        // dx < 0 : move to right
-
-        i = dx < 0 ? -1 : 1;
-        dx = abs(dx);
-        for (auto y = y0 + 1; y < y1; y++)
-        {
-            if (p >= 0)
-            {
-                x += x < x1 ? i : 0;
-                p += 2 * dx - 2 * dy;
-            }
-            else
-            {
-                p += 2 * dy;
-            }
-            pixel(x, y, c);
-        }
-    }
 }
 
 /**
@@ -386,4 +197,9 @@ void rstzr::Canvas::antiliasing()
 
     //new_color = background_color * (1-opacity) + opacity * target_color
     //And put this new_color instead of antialiased pixel.
+}
+
+void rstzr::Canvas::draw(Graphic &g, LINE_MODE mode)
+{
+    g.draw(*this, mode);
 }

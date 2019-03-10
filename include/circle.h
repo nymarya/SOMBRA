@@ -2,30 +2,36 @@
 #define _circle_h_
 
 #include "point.h"
+#include "graphic.h"
+#include "canvas.h"
+
 namespace rstzr
 {
 
-class Circle
+class Circle : public Graphic
 {
 
-  public:
-    Circle(int radius, Point2D center);
-    ~Circle() = default;
+public:
+  Circle(int radius, Point2D center, Color &stroke);
+  Circle(int radius, Point2D center, Color &fill, Color &stroke);
+  ~Circle() = default;
 
-    /**
+  /**
      * @brief Get the radius of the circle
      */
-    int radius() const;
+  int radius() const;
 
-    /**
+  /**
      * @brief Get the center of the circle.
      */
-    Point2D center() const;
+  Point2D center() const;
 
-  private:
-    int m_radius;
+  void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM);
 
-    Point2D m_center;
+private:
+  int m_radius;
+
+  Point2D m_center;
 }; //class Circle
 
 } // namespace rstzr
