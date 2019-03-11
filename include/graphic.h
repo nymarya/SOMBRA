@@ -3,6 +3,9 @@
 
 #include "color.h"
 #include "common.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 namespace rstzr
 {
@@ -13,6 +16,11 @@ class Graphic
 {
 
 public:
+  /**
+   * @brief Construct graphic based on json file
+   */
+  Graphic(json &j);
+
   Graphic(Color &stroke);
   Graphic(Color &fill, Color &stroke);
   ~Graphic() = default;
@@ -48,6 +56,7 @@ public:
   int stroke_width() const;
 
   virtual void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM) = 0;
+
 
 private:
   /* data */

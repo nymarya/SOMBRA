@@ -1,4 +1,8 @@
 #include "arc.h"
+rstzr::Arc::Arc(json &j)
+:Graphic (j)
+{}
+
 
 rstzr::Arc::Arc(Point2D center, int start_angle, int end_angle, int radius, Color stroke)
     : m_center(center), m_start_angle(start_angle), m_end_angle(end_angle),

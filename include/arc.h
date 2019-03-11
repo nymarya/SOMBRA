@@ -14,6 +14,10 @@ class Arc : public Graphic
 {
 
   public:
+  	/**
+  	 * @brief Construct arc with json
+  	 */
+  	Arc(json &j);
     Arc(Point2D center, int start_angle, int end_angle, int radius, Color stroke);
     ~Arc() = default;
 

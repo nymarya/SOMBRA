@@ -25,6 +25,8 @@ class Canvas
    /**
              * @brief Constructor Default
              */
+
+   Canvas()=default;
    Canvas(std::size_t width, std::size_t height);
 
    /**
@@ -43,14 +45,24 @@ class Canvas
    component_t pixel(const long x, const long y) const;
 
    /**
-     * @brief Get the canvas width
+     * @brief Get the canvas' width
      */
    size_t width(void) const;
 
    /**
-     * @brief Get the canvas height
+     * @brief Get the canvas' width
+     */
+   void width(const size_t);
+
+   /**
+     * @brief Get the canvas' height
      */
    size_t height(void) const;
+
+   /**
+     * @brief Get the canvas' height
+     */
+   void height(const size_t);
 
    /**
      * @brief Get the canvas pixels as an array of unsigned char.

@@ -1,5 +1,10 @@
 #include "graphic.h"
 
+rstzr::Graphic::Graphic(json &j)
+{
+    /*empty*/
+}
+
 rstzr::Graphic::Graphic(Color &fill, Color &stroke)
     : m_fill_color(fill), m_stroke_color(stroke)
 {

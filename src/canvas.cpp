@@ -48,11 +48,27 @@ size_t rstzr::Canvas::width(void) const
 }
 
 /**
+ * @brief Get the canvas width
+ */
+void rstzr::Canvas::width(size_t width)
+{
+    m_width = width;
+}
+
+/**
  * @brief Get the canvas height
  */
 size_t rstzr::Canvas::height(void) const
 {
     return m_height;
+}
+
+/**
+ * @brief Get the canvas width
+ */
+void rstzr::Canvas::height(size_t height)
+{
+    m_height = height;
 }
 
 /**

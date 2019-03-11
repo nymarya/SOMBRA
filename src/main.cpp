@@ -6,11 +6,14 @@
 #include "../include/arc.h"
 
 #include <vector>
+#include <map>
+#include <iomanip>      // std::setw
 
 using namespace rstzr;
 
 int main()
 {
+     /**
      size_t width = 1000;
      size_t height = 1000;
 
@@ -164,7 +167,7 @@ int main()
 
      File file5("arc");
 
-     file5.save_ppm(c5);
+     file5.save_ppm(c5);**/
 /**
      Canvas c6(width, height);
 
@@ -176,6 +179,19 @@ int main()
      File file6("arc_circle");
 
      file6.save_ppm(c6);**/
+
+     // Get argument with name of file containing the scene
+
+     // Create canvas
+     Canvas canvas;
+
+     // Read file
+     File file("windows.json");
+     file.read(canvas);
+
+     // Draw objects
+
+     // Save final image
 
      return 0;
 }

@@ -1,12 +1,49 @@
 #include "../include/file.h"
+#include <typeinfo>
 
 rstzr::File::File(std::string filename)
 		: m_filename(filename), m_mode(0)
 { /*empty*/
 }
-
-void rstzr::File::read()
+/**
+ * @brief Read json and save figures to canvas
+ */
+void rstzr::File::read(Canvas  &cv)
 {
+	 // read a JSON file
+     std::ifstream i(m_filename);
+     json j;
+     i >> j;
+
+     // Get scene
+     auto scene = j.at("scene");
+
+     //Get canvas' data
+     auto h = scene.at("height");
+     auto w = scene.at("width");
+     cv.width(w);
+     cv.height(h);
+
+     m_filename = scene.at("filename");
+
+     //Load palette
+
+     //Load background image
+
+     // Get all graphic objects
+     auto objs = scene.at("objects");
+     std::vector<std::unique_ptr<Graphic>> graphics;
+     for( auto i=0u; i < objs.size(); i++)
+     	graphics.push_back( invoke(objs[i]) );
+
+     std::cout << scene.at("objects") << "\n";
+     std::cout << graphics.size() << "\n";
+
+
+	std::cout << graphics[0] << std::endl;
+
+     // Return objects
+
 }
 
 void rstzr::File::save_ppm(const rstzr::Canvas &canvas)
@@ -42,4 +79,22 @@ void rstzr::File::save_ppm(const rstzr::Canvas &canvas)
 	}
 
 	file.close();
+}
+
+
+/**
+ * @brief Instantiate object
+ */
+std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j){
+	std::string name = j.at("type");
+	if(name ==  "arc"){
+		Arc arc(j);
+		return std::make_unique<Arc>(j);
+	}
+	else{
+	 	std::cout << "error\n";
+	 	Arc arc(j);
+		return std::make_unique<Arc>(j);
+
+	}
 }

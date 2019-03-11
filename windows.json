@@ -1,0 +1,18 @@
+{
+	"scene":{
+		"name":"canvas",
+		"filename":"teste",
+		"width":1000,
+		"height":1000,
+		"palette":"", 
+		"background":"white",
+		"objects":[
+			{
+			"type":"arc",
+			"radius":100,
+			"center":[500,500],
+			"color":"black"
+			}
+		]
+	}
+}
