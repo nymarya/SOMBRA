@@ -30,6 +30,11 @@ class Canvas
    Canvas(std::size_t width, std::size_t height);
 
    /**
+    *@brief Copy constructor.
+    */
+   Canvas &operator=( Canvas& other);
+
+   /**
              * @brief  Destructor default
              */
    ~Canvas() = default;

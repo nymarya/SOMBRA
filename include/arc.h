@@ -23,6 +23,11 @@ class Arc : public Graphic
 
     void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM);
 
+    /**
+     * @brief Get radius.
+     */
+    int radius();
+
   private:
     Point2D m_center; //start point
     int m_start_angle, m_end_angle, m_radius;

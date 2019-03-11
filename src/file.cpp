@@ -21,8 +21,8 @@ void rstzr::File::read(Canvas  &cv)
      //Get canvas' data
      auto h = scene.at("height");
      auto w = scene.at("width");
-     cv.width(w);
-     cv.height(h);
+     Canvas copy(w,h);
+     cv = copy;
 
      m_filename = scene.at("filename");
 
@@ -40,7 +40,7 @@ void rstzr::File::read(Canvas  &cv)
      std::cout << graphics.size() << "\n";
 
 
-	std::cout << graphics[0] << std::endl;
+	graphics[0]->draw(cv);
 
      // Return objects
 

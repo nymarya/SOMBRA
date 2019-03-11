@@ -1,7 +1,12 @@
 #include "arc.h"
 rstzr::Arc::Arc(json &j)
 :Graphic (j)
-{}
+{
+    m_center = Point2D(j.at("center")[0], j.at("center")[1]);
+    m_radius = j.at("radius");
+    m_start_angle = j.at("start_angle");
+    m_end_angle = j.at("end_angle");
+}
 
 
 rstzr::Arc::Arc(Point2D center, int start_angle, int end_angle, int radius, Color stroke)
@@ -123,4 +128,11 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
             
         }
     }
+}
+
+/**
+ * @brief Get radius.
+ */
+int rstzr::Arc::radius(){
+    return m_radius;
 }
