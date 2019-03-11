@@ -23,12 +23,19 @@ rstzr::Canvas::Canvas(const size_t width, const size_t height)
 *@brief Copy constructor.
 */
 rstzr::Canvas &rstzr::Canvas::operator=( Canvas& other){
-    m_pixels.reset( new component_t(*other.m_pixels.get()) );
+    
     m_width = other.m_width;
     m_height = other.m_height;
     m_bkg_color = other.m_bkg_color;
     m_stroke_color = other.m_stroke_color;
     m_fill_color = other.m_fill_color;
+
+    auto size = m_width * m_height * 3;
+
+    m_pixels = std::make_unique<component_t[]>(size);
+
+    for( auto i = 0u; i < size; i++)
+        m_pixels.get()[i] = other.m_pixels.get()[i];
 
     return *this;
 }
