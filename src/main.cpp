@@ -3,6 +3,7 @@
 #include "../include/line.h"
 #include "../include/file.h"
 #include "../include/graphic.h"
+#include "../include/arc.h"
 
 #include <vector>
 
@@ -148,6 +149,21 @@ int main()
      File file4("bres_circle");
 
      file4.save_ppm(c4);
+
+     ///////////////////////////
+     //// ARC       ////
+     ///////////////////////////
+
+     Canvas c5(width, height);
+
+     rstzr::Arc arc(Point2D(500, 500), 45, 135, 100, fill_color);
+     c5.draw(arc);
+
+     //c4.antiliasing();
+
+     File file5("arc");
+
+     file5.save_ppm(c5);
 
      return 0;
 }
