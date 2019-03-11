@@ -46,7 +46,7 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
         //cv.pixel(y + x_centre, x + y_centre, c);
         //cv.pixel(-y + x_centre, x + y_centre, c);
     }
-    while ( (y > x) | (angle > m_end_angle))
+    while ( (y > x))
     {
         
         if (d < 0)
@@ -66,26 +66,57 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
         x++;
 
         angle = atan2 (y,x) * 180 / PI;
-        std::cout << "a " << angle << ">\n";
-        std::cout << "<" << x+x_centre << ", " << y+y_centre << ">\n";
+        //std::cout << "a " << angle << ">\n";
+        //std::cout << "<" << x+x_centre << ", " << y+y_centre << ">\n";
         
         
-        cv.pixel(x + x_centre, y + y_centre, c);
-        /**
+        // draw point in range 0 to 45 degrees
+        if ( angle >= m_end_angle &&  angle <= m_start_angle && (0 <= angle && angle <= 45))
+                cv.pixel(x + x_centre, y + y_centre, c);
+        
         // Color the correspondent pixels
         // in the other octants
-        cv.pixel(-x + x_centre, y + y_centre, c);
-        cv.pixel(x + x_centre, -y + y_centre, c);
-        cv.pixel(-x + x_centre, -y + y_centre, c);
+        
+        //// draw point in range 135 to 180 degrees
+        if ((-90 - angle >= (m_start_angle) && -90- angle <= (m_end_angle)))
+            cv.pixel(-x + x_centre, y + y_centre, c);
+
+        // draw point in range 180 to 225 degrees
+        if ( (180 -angle) >= (m_start_angle) && (180 - angle) <= (m_end_angle))
+            cv.pixel(-x + x_centre, -y + y_centre, c);
+        
+        // draw point in range 315 to 360 degrees
+        if (angle  >= m_start_angle && angle  <= m_end_angle)
+            cv.pixel(x + x_centre, -y + y_centre, c);
+
 
         // If the generated point is on the line x = y then
         // the perimeter points have already been printed
         if (x != y)
         {
-            cv.pixel(y + x_centre, x + y_centre, c);
-            cv.pixel(-y + x_centre, x + y_centre, c);
-            cv.pixel(y + x_centre, -x + y_centre, c);
-            cv.pixel(-y + x_centre, -x + y_centre, c);
-        }**/
+            
+            //// draw point in range 45 to 90 degrees
+            if ((m_end_angle <= angle && angle <= m_start_angle) && (45 <= angle && angle <= 90)){
+                std::cout << "2o\n";
+                cv.pixel(y + x_centre, x + y_centre, c);
+            }
+            
+            //// draw point in range 90 to 135 degrees
+            //std::cout << "a : " << angle << " .. " << atan (abs(x/y)) * 180.0 / PI << "\n";
+            if ((m_end_angle <= angle && angle <= m_start_angle) && (90 <= angle && angle <= 135)){
+                std::cout << "3o\n";
+                cv.pixel(-y + x_centre, x + y_centre, c);
+            }
+
+            // draw point in range 225 to 270 degrees
+            if (-180 + angle >= m_start_angle && -180 + angle <= m_end_angle)
+                cv.pixel(-y + x_centre, -x + y_centre, c);
+
+            // draw point in range 270 to 315 degrees
+            if (-angle >= m_start_angle && -angle <= m_end_angle)
+                cv.pixel(y + x_centre, -x + y_centre, c);
+
+            
+        }
     }
 }
