@@ -6,6 +6,8 @@
 #include "common.h"
 #include "canvas.h"
 
+#define PI 3.14159265
+
 namespace rstzr
 {
 class Arc : public Graphic

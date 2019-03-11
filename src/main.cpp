@@ -156,14 +156,26 @@ int main()
 
      Canvas c5(width, height);
 
-     rstzr::Arc arc(Point2D(500, 500), 45, 135, 100, fill_color);
+     rstzr::Arc arc(Point2D(500, 500), 135, 45, 100, fill_color);
      c5.draw(arc);
 
      //c4.antiliasing();
+     
 
      File file5("arc");
 
      file5.save_ppm(c5);
+/**
+     Canvas c6(width, height);
+
+     rstzr::Arc arc1(Point2D(500, 500), 0, 360, 100, fill_color);
+     c6.draw(arc1);
+
+     //c4.antiliasing();
+
+     File file6("arc_circle");
+
+     file6.save_ppm(c6);**/
 
      return 0;
 }
