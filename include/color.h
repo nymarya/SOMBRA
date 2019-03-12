@@ -11,22 +11,27 @@ namespace rstzr
 class Color
 {
 
-  public:
-    Color() = default;
-    Color(color_t red, color_t green, color_t blue);
+public:
+  Color() = default;
+  Color(color_t red, color_t green, color_t blue);
 
-    ~Color() = default;
+  ~Color() = default;
 
-    Color &operator=(const Color &other);
+  Color &operator=(const Color &other);
 
-    color_t red() const;
+  /**
+   * @brief Override operator 'equal'
+   */
+  bool operator==(const Color &other) const;
 
-    color_t green() const;
+  color_t red() const;
 
-    color_t blue() const;
+  color_t green() const;
 
-  private:
-    color_t *m_channels;
+  color_t blue() const;
+
+private:
+  color_t *m_channels;
 };
 } // namespace rstzr
 

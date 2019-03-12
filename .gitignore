@@ -4,3 +4,5 @@
 *.out
 *.d
 *.o
+
+.vscode/

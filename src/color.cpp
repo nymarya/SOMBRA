@@ -23,6 +23,13 @@ rstzr::Color& rstzr::Color::Color::operator=( const Color& other ){
 	return *this;
 }
 
+/**
+ * @brief Override operator 'equal'
+ */
+bool rstzr::Color::operator==(const Color &other) const{
+	return ( other.red() == this->red() ) && ( other.green() == this->green() ) && ( other.blue() == this->blue() );
+}
+
 color_t rstzr::Color::red() const{
     return m_channels[0];
 }

@@ -22,8 +22,9 @@ rstzr::Canvas::Canvas(const size_t width, const size_t height)
 /**
 *@brief Copy constructor.
 */
-rstzr::Canvas &rstzr::Canvas::operator=( Canvas& other){
-    
+rstzr::Canvas &rstzr::Canvas::operator=(Canvas &other)
+{
+
     m_width = other.m_width;
     m_height = other.m_height;
     m_bkg_color = other.m_bkg_color;
@@ -34,7 +35,7 @@ rstzr::Canvas &rstzr::Canvas::operator=( Canvas& other){
 
     m_pixels = std::make_unique<component_t[]>(size);
 
-    for( auto i = 0u; i < size; i++)
+    for (auto i = 0u; i < size; i++)
         m_pixels.get()[i] = other.m_pixels.get()[i];
 
     return *this;
@@ -58,6 +59,18 @@ void rstzr::Canvas::pixel(const long x, const long y, const Color &c)
 component_t rstzr::Canvas::pixel(const long x, const long y) const
 {
     return m_pixels[(x * m_width) + y];
+}
+
+/**
+ * @brief Get the color of a pixel from canvas
+ */
+rstzr::Color rstzr::Canvas::color(const long x, const long y) const
+{
+    auto red = m_pixels[m_width * y + x];
+    auto green = m_pixels[m_height * m_width + m_width * y + x];
+    auto blue = m_pixels[m_height * m_width * 2 + m_width * y + x];
+
+    return Color(red, green, blue);
 }
 
 /**
@@ -254,4 +267,26 @@ void rstzr::Canvas::antiliasing()
 void rstzr::Canvas::draw(Graphic &g, LINE_MODE mode)
 {
     g.draw(*this, mode);
+}
+
+/**
+ * @brief Fill object using the boundary fill method
+ */
+void rstzr::Canvas::boundary_fill(const rstzr::Point2D &p, const rstzr::Color &fill, const rstzr::Color &boundary)
+{
+    auto x = p.x();
+    auto y = p.y();
+    if (x < 0 || x >= m_width)
+        return;
+    if (y < 0 || y >= m_height)
+        return;
+    Color current = color(x, y);
+    if (!(current == boundary) & !(current == fill))
+    {
+        pixel(x, y, fill);
+        boundary_fill(Point2D(x + 1, y), fill, boundary);
+        boundary_fill(Point2D(x, y + 1), fill, boundary);
+        boundary_fill(Point2D(x - 1, y), fill, boundary);
+        boundary_fill(Point2D(x, y - 1), fill, boundary);
+    }
 }
