@@ -1,19 +1,31 @@
 {
-	"scene":{
-		"name":"canvas",
-		"filename":"teste",
-		"width":1000,
-		"height":1000,
-		"palette":"", 
-		"background":"white",
-		"objects":[
+	"scene": {
+		"name": "canvas",
+		"filename": "teste",
+		"width": 1000,
+		"height": 1000,
+		"palette": "",
+		"background": "white",
+		"objects": [
 			{
-			"type":"arc",
-			"radius":100,
-			"center":[500,500],
-			"color":"black",
-			"start_angle":135,
-			"end_angle":45
+				"type": "arc",
+				"radius": 100,
+				"center": [
+					500,
+					500
+				],
+				"color": "black",
+				"start_angle": 135,
+				"end_angle": 45
+			},
+			{
+				"type": "circle",
+				"radius": 100,
+				"center": [
+					500,
+					500
+				],
+				"color": "black"
 			}
 		]
 	}
