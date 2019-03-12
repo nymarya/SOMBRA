@@ -13,24 +13,29 @@ namespace rstzr
 class Arc : public Graphic
 {
 
-  public:
-  	/**
+public:
+  /**
   	 * @brief Construct arc with json
   	 */
-  	Arc(json &j);
-    Arc(Point2D center, int start_angle, int end_angle, int radius, Color stroke);
-    ~Arc() = default;
+  Arc(json &j);
 
-    void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM);
+  /**
+  	 * @brief Construct arc with json with angle interval
+  	 */
+  Arc(json &j, int start_angle, int end_angle);
+  Arc(Point2D center, int start_angle, int end_angle, int radius, Color stroke);
+  ~Arc() = default;
 
-    /**
+  void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM);
+
+  /**
      * @brief Get radius.
      */
-    int radius();
+  int radius();
 
-  private:
-    Point2D m_center; //start point
-    int m_start_angle, m_end_angle, m_radius;
+private:
+  Point2D m_center; //start point
+  int m_start_angle, m_end_angle, m_radius;
 };
 } // namespace rstzr
 

@@ -5,6 +5,15 @@
 /**
  * @brief Constructor for class Line.
  */
+rstzr::Line::Line(json &j)
+    : m_p1(Point2D(j.at("p1")[0], j.at("p1")[1])), m_p2(Point2D(j.at("p2")[0], j.at("p2")[1])),
+      Graphic(j)
+{ /*empty*/
+}
+
+/**
+ * @brief Constructor for class Line.
+ */
 rstzr::Line::Line(Point2D p1, Point2D p2, Color &stroke)
     : m_p1(p1), m_p2(p2), Graphic(stroke)
 { /*empty*/

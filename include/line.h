@@ -12,19 +12,23 @@ namespace rstzr
 {
 
 /**
-	 * @brief Class that represents a line
-	 */
+ * @brief Class that represents a line
+ */
 class Line : public Graphic
 {
   public:
 	/**
-			 * @brief Constructor for class Line.
-			 */
+	 * @brief Constructor for class Line based on json.
+	 */
+	Line(json &j);
+	/**
+	 * @brief Constructor for class Line.
+	 */
 	Line(Point2D p1, Point2D p2, Color &c);
 
 	/**
-			 * @brief Destructor 
-			 */
+	 * @brief Destructor 
+	 */
 	~Line() = default;
 
 	/**

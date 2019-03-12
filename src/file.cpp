@@ -83,12 +83,19 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 	std::string name = j.at("type");
 	if (name == "arc")
 	{
-		Arc arc(j);
 		return std::make_unique<Arc>(j);
+	}
+	else if (name == "circle")
+	{
+		return std::make_unique<Circle>(j);
+	}
+	else if (name == "line")
+	{
+		return std::make_unique<Line>(j);
 	}
 	else
 	{
 		std::cout << "error\n";
-		return std::make_unique<Graphic>(j);
+		return std::make_unique<Arc>(j);
 	}
 }

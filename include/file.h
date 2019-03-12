@@ -4,10 +4,12 @@
 #include <string>
 #include <fstream>
 #include <memory> //unique_ptr, make_unique
-#include "canvas.h"
 
+#include "canvas.h"
 #include "graphic.h"
 #include "arc.h"
+#include "line.h"
+#include "circle.h"
 
 #include "json.hpp"
 

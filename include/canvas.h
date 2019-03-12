@@ -9,7 +9,7 @@
 
 #include "color.h"
 #include "point.h"
-#include "circle.h"
+#include "graphic.h"
 
 #include "filter.h"
 
