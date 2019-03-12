@@ -2,48 +2,42 @@
 #include <typeinfo>
 
 rstzr::File::File(std::string filename)
-		: m_filename(filename), m_mode(0)
+	: m_filename(filename), m_mode(0)
 { /*empty*/
 }
 /**
  * @brief Read json and save figures to canvas
  */
-void rstzr::File::read(Canvas  &cv)
+std::vector<std::unique_ptr<rstzr::Graphic>> rstzr::File::read(Canvas &cv)
 {
-	 // read a JSON file
-     std::ifstream i(m_filename);
-     json j;
-     i >> j;
+	// read a JSON file
+	std::ifstream i(m_filename);
+	json j;
+	i >> j;
 
-     // Get scene
-     auto scene = j.at("scene");
+	// Get scene
+	auto scene = j.at("scene");
 
-     //Get canvas' data
-     auto h = scene.at("height");
-     auto w = scene.at("width");
-     Canvas copy(w,h);
-     cv = copy;
+	//Get canvas' data
+	auto h = scene.at("height");
+	auto w = scene.at("width");
+	Canvas copy(w, h);
+	cv = copy;
 
-     m_filename = scene.at("filename");
+	m_filename = scene.at("filename");
 
-     //Load palette
+	//Load palette
 
-     //Load background image
+	//Load background image
 
-     // Get all graphic objects
-     auto objs = scene.at("objects");
-     std::vector<std::unique_ptr<Graphic>> graphics;
-     for( auto i=0u; i < objs.size(); i++)
-     	graphics.push_back( invoke(objs[i]) );
+	// Get all graphic objects
+	auto objs = scene.at("objects");
+	std::vector<std::unique_ptr<Graphic>> graphics;
+	for (auto i = 0u; i < objs.size(); i++)
+		graphics.push_back(invoke(objs[i]));
 
-     std::cout << scene.at("objects") << "\n";
-     std::cout << graphics.size() << "\n";
-
-
-	graphics[0]->draw(cv);
-
-     // Return objects
-
+	// Return objects
+	return graphics;
 }
 
 void rstzr::File::save_ppm(const rstzr::Canvas &canvas)
@@ -60,9 +54,9 @@ void rstzr::File::save_ppm(const rstzr::Canvas &canvas)
 	std::string path = folder + this->m_filename + extension;
 	file.open(path);
 	file << "P3"
-			 << "\n";
+		 << "\n";
 	file << width << " "
-			 << height << "\n";
+		 << height << "\n";
 	file << 255 << "\n";
 
 	for (unsigned int x = 0; x < width; x++)
@@ -81,20 +75,20 @@ void rstzr::File::save_ppm(const rstzr::Canvas &canvas)
 	file.close();
 }
 
-
 /**
  * @brief Instantiate object
  */
-std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j){
+std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
+{
 	std::string name = j.at("type");
-	if(name ==  "arc"){
+	if (name == "arc")
+	{
 		Arc arc(j);
 		return std::make_unique<Arc>(j);
 	}
-	else{
-	 	std::cout << "error\n";
-	 	Arc arc(j);
-		return std::make_unique<Arc>(j);
-
+	else
+	{
+		std::cout << "error\n";
+		return std::make_unique<Graphic>(j);
 	}
 }

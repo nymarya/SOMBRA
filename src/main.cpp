@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <map>
-#include <iomanip>      // std::setw
+#include <iomanip> // std::setw
 
 using namespace rstzr;
 
@@ -168,7 +168,7 @@ int main()
      File file5("arc");
 
      file5.save_ppm(c5);**/
-/**
+     /**
      Canvas c6(width, height);
 
      rstzr::Arc arc1(Point2D(500, 500), 0, 360, 100, fill_color);
@@ -183,15 +183,22 @@ int main()
      // Get argument with name of file containing the scene
 
      // Create canvas
-     Canvas canvas;
+     Canvas canvas(100, 100);
 
      // Read file
      File file("windows.json");
-     file.read(canvas);
+     std::vector<std::unique_ptr<Graphic>> objects = file.read(canvas);
 
      // Draw objects
+     std::vector<std::unique_ptr<Graphic>>::iterator it = objects.begin();
+     while (it != objects.end())
+     {
+          it->get()->draw(canvas);
+          it++;
+     }
 
      // Save final image
+     file.save_ppm(canvas);
 
      return 0;
 }
