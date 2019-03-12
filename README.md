@@ -10,6 +10,6 @@ Simple Objects Minimal Bidimensional RAsterizer
 - [ ] Elipse [opcional]
 - [ ] Preenchimento
     - [ ] Scan-line approach
-    - [ ] Fill
+    - [x] Fill
 - [x] Antialiasing
 - [ ] Camadas: um objeto sobrescrever o outro
