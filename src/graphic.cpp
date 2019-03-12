@@ -1,6 +1,7 @@
 #include "graphic.h"
 
 rstzr::Graphic::Graphic(json &j)
+    : m_stroke_color(Color(0, 0, 0))
 {
     /*empty*/
 }
