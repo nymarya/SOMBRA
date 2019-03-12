@@ -276,9 +276,9 @@ void rstzr::Canvas::boundary_fill(const rstzr::Point2D &p, const rstzr::Color &f
 {
     auto x = p.x();
     auto y = p.y();
-    if (x < 0 || x >= m_width)
+    if (x < 0 || x > m_width-1)
         return;
-    if (y < 0 || y >= m_height)
+    if (y < 0 || y > m_height-1)
         return;
     Color current = color(x, y);
     if (!(current == boundary) & !(current == fill))
