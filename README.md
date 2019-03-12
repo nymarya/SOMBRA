@@ -6,7 +6,7 @@ Simple Objects Minimal Bidimensional RAsterizer
     - [x] Segmento de linha
     - [ ] Polilinha
 - [x] Círculo 
-- [ ] Semi-círculo
+- [x] Semi-círculo
 - [ ] Elipse [opcional]
 - [ ] Preenchimento
     - [ ] Scan-line approach
