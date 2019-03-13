@@ -9,12 +9,20 @@ rstzr::Circle::Circle(json &j)
 }
 
 /**
+ * @brief Fill the figure using the boundary fill method.
+ */
+void rstzr::Circle::fill(Canvas &cv) {
+    boundary_fill(cv, centre(), fill_color(), stroke_color());
+}
+
+/**
  * @brief Fill object using the boundary fill method
  */
 void rstzr::Circle::boundary_fill(Canvas &cv, const rstzr::Point2D &p, const rstzr::Color &fill, const rstzr::Color &boundary)
 {
     auto x = p.x();
     auto y = p.y();
+    if( fill_mode() == FILL_MODE::NONE) return;
     if (x < 0 || x > (int)cv.width()-1)
         return;
     if (y < 0 || y > (int)cv.height()-1)

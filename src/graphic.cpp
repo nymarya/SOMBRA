@@ -72,3 +72,10 @@ int rstzr::Graphic::stroke_width() const
 void rstzr::Graphic::fill(Canvas &cv){
     
 }
+
+/**
+ * @brief Get the fill mode of the figure (boundary, scan-line or none)
+ */
+FILL_MODE rstzr::Graphic::fill_mode() const{
+    return m_fill_mode;
+}

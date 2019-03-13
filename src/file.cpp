@@ -80,6 +80,7 @@ void rstzr::File::save_ppm(const rstzr::Canvas &canvas)
  */
 std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 {
+
 	std::string name = j.at("type");
 	if (name == "arc")
 	{
@@ -99,6 +100,7 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 		return std::make_unique<Arc>(j);
 	}
 
-	//TODO: Check wheter stroke and backgorund color are 
+	//TODO: Check wheter stroke and background color are 
 	//in the json. If not, set the canvas' info 
+	//If fill=None, set the method
 }

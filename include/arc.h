@@ -33,8 +33,13 @@ public:
    */
   int radius();
 
+  /**
+   * @brief Get centre point.
+   */
+  Point2D centre();
+
 private:
-  Point2D m_center; //start point
+  Point2D m_centre; //start point
   int m_start_angle, m_end_angle, m_radius;
 };
 } // namespace rstzr

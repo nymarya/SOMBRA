@@ -3,21 +3,21 @@
 rstzr::Arc::Arc(json &j)
     : Graphic(j)
 {
-    m_center = Point2D(j.at("center")[0], j.at("center")[1]);
+    m_centre = Point2D(j.at("center")[0], j.at("center")[1]);
     m_radius = j.at("radius");
     m_start_angle = j.at("start_angle");
     m_end_angle = j.at("end_angle");
 }
 
 rstzr::Arc::Arc(json &j, int start_angle, int end_angle)
-    : m_center(Point2D(j.at("center")[0], j.at("center")[1])), m_radius(j.at("radius")),
+    : m_centre(Point2D(j.at("center")[0], j.at("center")[1])), m_radius(j.at("radius")),
       m_start_angle(start_angle), m_end_angle(end_angle), Graphic(j)
 {
     //empty
 }
 
 rstzr::Arc::Arc(Point2D center, int start_angle, int end_angle, int radius, Color stroke)
-    : m_center(center), m_start_angle(start_angle), m_end_angle(end_angle),
+    : m_centre(center), m_start_angle(start_angle), m_end_angle(end_angle),
       m_radius(radius), Graphic(stroke)
 { /*empty*/
 }
@@ -26,8 +26,8 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
 {
     std::cout << "aa\n";
     //Get the center point
-    auto x_centre = m_center.x();
-    auto y_centre = m_center.y();
+    auto x_centre = m_centre.x();
+    auto y_centre = m_centre.y();
     auto radius = m_radius;
 
     //Get start point
@@ -153,4 +153,11 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
 int rstzr::Arc::radius()
 {
     return m_radius;
+}
+
+/**
+ * @brief Get centre point.
+ */
+rstzr::Point2D rstzr::Arc::centre(){
+    return m_centre;
 }

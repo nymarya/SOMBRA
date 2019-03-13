@@ -55,6 +55,14 @@ class Graphic
      */
    int stroke_width() const;
 
+    /**
+     * @brief Get the fill mode of the figure (boundary, scan-line or none)
+     */
+   FILL_MODE fill_mode() const;
+
+  /**
+   * @brief Abstract method for drawing the figure.
+   */
    virtual void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM) = 0;
 
   /**

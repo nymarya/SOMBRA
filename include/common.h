@@ -13,7 +13,8 @@ enum LINE_MODE{
 
 enum FILL_MODE{
 	SCAN_LINE,
-	BOUNDARY
+	BOUNDARY,
+	NONE
 };
 
 #endif

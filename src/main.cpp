@@ -199,6 +199,8 @@ int main()
 
      canvas.boundary_fill(Point2D(50, 100), Color(255,83,13), Color(0,0,0));
 
+     canvas.antiliasing();
+
      // Save final image
      file.save_ppm(canvas);
 
