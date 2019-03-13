@@ -25,6 +25,7 @@ rstzr::Line::Line(Point2D p1, Point2D p2, Color &stroke)
  */
 void rstzr::Line::drawDDA(Canvas &c)
 {
+    std::cout << " dda\n";
     coord_type x0 = m_p1.x();
     coord_type x1 = m_p2.x();
     coord_type y0 = m_p1.y();
@@ -63,11 +64,11 @@ void rstzr::Line::drawBresenham(Canvas &c)
 
     float dy = y1 - y0;
     float dx = x1 - x0;
-    float p;
+    float p = 0.0;
 
     // Flag to verify wheter movement m1 is
     // vertical, ie., which axis must be explored
-    bool turn = abs(dx) - abs(dy) < 0;
+    bool turn = abs(dx) < abs(dy);
 
     auto x = x0;
     auto y = y0;
@@ -79,16 +80,20 @@ void rstzr::Line::drawBresenham(Canvas &c)
         // dy >= 0: move up
         // dy < 0 : move down
 
-        i = dy < 0 ? -1 : 1;
-        dy = abs(dy);
+        if(dy < 0) 
+            i = -1;
+        else if(dy == 0)
+            i = 0;
+        else
+            i=1;
         p = 2 * dy - 2 * dx;
 
-        for (auto x = x0 + 1; x < x1; x++)
+        for (auto x = x0 + 1; x <= x1; x++)
         {
             if (p >= 0)
             {
                 y += i;
-                p += 2 * abs(dy) - 2 * dx;
+                p += 2 * dy - 2 * dx;
             }
             else
             {
@@ -104,18 +109,26 @@ void rstzr::Line::drawBresenham(Canvas &c)
         // dx >= 0: move to left
         // dx < 0 : move to right
 
-        i = dx < 0 ? -1 : 1;
-        dx = abs(dx);
-        for (auto y = y0 + 1; y < y1; y++)
+        if(dx < 0){
+            i = -1;
+            dx = -dx;
+        }
+        else if(dx == 0)
+            i = 0;
+        else
+            i=1;
+
+        p = 2 * dx - 2 * dy;
+        for (auto y = y0 + 1; y <= y1; y++)
         {
             if (p >= 0)
             {
-                x += x < x1 ? i : 0;
+                x +=i;
                 p += 2 * dx - 2 * dy;
             }
             else
             {
-                p += 2 * dy;
+                p += 2 * dx;
             }
             c.pixel(x, y, stroke_color());
         }

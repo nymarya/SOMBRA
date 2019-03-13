@@ -11,4 +11,9 @@ enum LINE_MODE{
 	COMPARE
 };
 
+enum FILL_MODE{
+	SCAN_LINE,
+	BOUNDARY
+};
+
 #endif

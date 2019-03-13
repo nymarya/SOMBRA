@@ -12,4 +12,4 @@ Simple Objects Minimal Bidimensional RAsterizer
     - [ ] Scan-line approach
     - [x] Fill
 - [x] Antialiasing
-- [ ] Camadas: um objeto sobrescrever o outro
+- [ ] Paleta de cores
