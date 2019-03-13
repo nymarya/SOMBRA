@@ -32,18 +32,18 @@ class Line : public Graphic
 	~Line() = default;
 
 	/**
-             * @brief Draw a line between two points 2D
-             */
+	 * @brief Draw a line between two points 2D
+	 */
 	void drawDDA(Canvas &cv);
 
 	/**
-             * @brief Draw a line between two points 2D using the brsenham algorithm
-             */
+	 * @brief Draw a line between two points 2D using the brsenham algorithm
+	 */
 	void drawBresenham(Canvas &cv);
 
 	/**
-			 * @brief Draw a line in a canvas.
-			 */
+	 * @brief Draw a line in a canvas.
+	 */
 	void draw(Canvas &cv, LINE_MODE mode);
 
   private:

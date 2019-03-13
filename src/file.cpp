@@ -98,4 +98,7 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 		std::cout << "error\n";
 		return std::make_unique<Arc>(j);
 	}
+
+	//TODO: Check wheter stroke and backgorund color are 
+	//in the json. If not, set the canvas' info 
 }

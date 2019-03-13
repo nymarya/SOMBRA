@@ -65,3 +65,10 @@ int rstzr::Graphic::stroke_width() const
 {
     return m_stroke_width;
 }
+
+/**
+ * @brief Fill the figure.
+ */
+void rstzr::Graphic::fill(Canvas &cv){
+    
+}

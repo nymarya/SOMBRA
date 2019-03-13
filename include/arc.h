@@ -29,8 +29,8 @@ public:
   void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM);
 
   /**
-     * @brief Get radius.
-     */
+   * @brief Get radius.
+   */
   int radius();
 
 private:

@@ -57,10 +57,18 @@ class Graphic
 
    virtual void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM) = 0;
 
+  /**
+   * @brief Fill the figure.
+   */
+   void fill(Canvas &cv);
+
  private:
    /* data */
    Color m_stroke_color, m_fill_color;
    int m_stroke_width;
+
+   FILL_MODE m_fill_mode;
+
 };
 
 } // namespace rstzr

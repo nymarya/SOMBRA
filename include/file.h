@@ -17,8 +17,8 @@ using json = nlohmann::json;
 namespace rstzr
 {
 /**
-     * Provide the method to read and save files
-     */
+ * Provide the method to read and save files
+ */
 class File
 {
 
