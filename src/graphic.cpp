@@ -27,24 +27,24 @@ void rstzr::Graphic::fill_color(const rstzr::Color &c)
 }
 
 /**
-     * Get the color of the figure.
-     */
+ * Get the color of the figure.
+ */
 rstzr::Color rstzr::Graphic::fill_color() const
 {
     return m_fill_color;
 }
 
 /**
-     * Set the border color.
-     */
+ * Set the border color.
+ */
 void rstzr::Graphic::stroke_color(const rstzr::Color &c)
 {
     m_stroke_color = c;
 }
 
 /**
-     * Get the border color.
-     */
+ * Get the border color.
+ */
 rstzr::Color rstzr::Graphic::stroke_color() const
 {
     return m_stroke_color;

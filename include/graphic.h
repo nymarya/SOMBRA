@@ -26,32 +26,32 @@ class Graphic
    ~Graphic() = default;
 
    /**
-     * Set the color of the figure.
+     * @brief Set the color of the figure.
      */
    void fill_color(const Color &c);
 
    /**
-     * Get the color of the figure.
+     * @brief Get the color of the figure.
      */
    Color fill_color() const;
 
    /**
-     * Set the border color.
+     * @brief Set the border color.
      */
    void stroke_color(const Color &c);
 
    /**
-     * Get the border color.
+     * @brief Get the border color.
      */
    Color stroke_color() const;
 
    /**
-     * Set the border width.
+     * @brief Set the border width.
      */
    void stroke_width(const int width);
 
    /**
-     * Get the border width.
+     * @brief Get the border width.
      */
    int stroke_width() const;
 
