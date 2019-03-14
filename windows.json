@@ -8,6 +8,81 @@
 		"background": "white",
 		"objects": [
 			{
+				"type": "arc",
+				"radius": 100,
+				"center": [
+					500,
+					500
+				],
+				"color": "black",
+				"start_angle": 180,
+				"end_angle": 0
+			},
+			{
+				"type": "circle",
+				"radius": 150,
+				"center": [
+					500,
+					500
+				],
+				"color": "black"
+			},
+			{
+				"type": "line",
+				"p1": [
+					10,
+					10
+				],
+				"p2": [
+					10,
+					200
+				]
+			},
+			{
+				"type": "line",
+				"p1": [
+					10,
+					200
+				],
+				"p2": [
+					100,
+					200
+				]
+			},
+			{
+				"type": "line",
+				"p1": [
+					200,
+					10
+				],
+				"p2": [
+					100,
+					200
+				]
+			},
+			{
+				"type": "line",
+				"p1": [
+					10,
+					10
+				],
+				"p2": [
+					200,
+					10
+				]
+			},
+			{
+				"type": "arc",
+				"radius": 50,
+				"center": [
+					500,
+					500
+				],
+				"color": "black",
+				"start_angle": 135,
+				"end_angle": 45
+			},
+			{
 				"type": "polygon",
 				"points": [
 					[10,10],[10,200],
