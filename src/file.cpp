@@ -94,13 +94,16 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 	{
 		return std::make_unique<Line>(j);
 	}
+	else if (name == "polygon")
+	{
+		return std::make_unique<Polygon>(j);
+	}
 	else
 	{
-		std::cout << "error\n";
-		return std::make_unique<Arc>(j);
+		throw std::invalid_argument("Invalid syntax. Type not found: " + name);
 	}
 
-	//TODO: Check wheter stroke and background color are 
-	//in the json. If not, set the canvas' info 
+	//TODO: Check wheter stroke and background color are
+	//in the json. If not, set the canvas' info
 	//If fill=None, set the method
 }

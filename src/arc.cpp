@@ -94,7 +94,7 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
         // draw point in range 0 to 45 degrees
         if ((-45 + angle >= m_end_angle && -45 + angle <= m_start_angle))
         {
-            std::cout << "a 0-45: " << angle << "\n";
+            //std::cout << "a 0-45: " << angle << "\n";
             cv.pixel(x + x_centre, y + y_centre, c);
         }
 
@@ -104,7 +104,7 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
         //// draw point in range 135 to 180 degrees
         if (90 + angle >= m_end_angle && 90 + angle <= m_start_angle)
         {
-            std::cout << "a 135-180: " << angle << "\n";
+            //std::cout << "a 135-180: " << angle << "\n";
             cv.pixel(-x + x_centre, y + y_centre, c);
         }
 
@@ -123,16 +123,16 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
             //// draw point in range 45 to 90 degrees
             if ((m_end_angle <= angle) && (angle <= m_start_angle))
             {
-                std::cout << "a 45-90: " << angle << "\n";
-                std::cout << "< " << x << "," << y << ">\n";
+                //std::cout << "a 45-90: " << angle << "\n";
+                //std::cout << "< " << x << "," << y << ">\n";
                 cv.pixel(y + x_centre, x + y_centre, c);
             }
 
             //// draw point in range 90 to 135 degrees
             if ((m_end_angle <= 45 + angle) && (45 + angle <= m_start_angle))
             {
-                std::cout << "a 90-135: " << angle << "\n";
-                std::cout << "< " << x << "," << y << ">\n";
+                //std::cout << "a 90-135: " << angle << "\n";
+                //std::cout << "< " << x << "," << y << ">\n";
                 cv.pixel(-y + x_centre, x + y_centre, c);
             }
 
@@ -158,6 +158,7 @@ int rstzr::Arc::radius()
 /**
  * @brief Get centre point.
  */
-rstzr::Point2D rstzr::Arc::centre(){
+rstzr::Point2D rstzr::Arc::centre()
+{
     return m_centre;
 }

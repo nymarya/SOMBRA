@@ -10,6 +10,7 @@
 #include "arc.h"
 #include "line.h"
 #include "circle.h"
+#include "polygon.h"
 
 #include "json.hpp"
 
@@ -22,29 +23,29 @@ namespace rstzr
 class File
 {
 
-  public:
-    File(std::string filename);
+public:
+  File(std::string filename);
 
-    ~File() = default;
+  ~File() = default;
 
-    /**
+  /**
      * @brief Read json and save figures to canvas
      */
-    std::vector<std::unique_ptr<Graphic>> read(Canvas &cv);
+  std::vector<std::unique_ptr<Graphic>> read(Canvas &cv);
 
-    void save_ppm(const rstzr::Canvas &canvas);
+  void save_ppm(const rstzr::Canvas &canvas);
 
-  private:
-    std::string m_filename;
+private:
+  std::string m_filename;
 
-    // 0 -> read
-    // 1 -> write
-    int m_mode;
+  // 0 -> read
+  // 1 -> write
+  int m_mode;
 
-    /**
+  /**
              * @brief Instantiate object]
              */
-    std::unique_ptr<Graphic> invoke(json &j);
+  std::unique_ptr<Graphic> invoke(json &j);
 };
 } // namespace rstzr
 

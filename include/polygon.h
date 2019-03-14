@@ -9,20 +9,25 @@ namespace rstzr
 
 class Polygon : public Graphic
 {
-  public:
-    /**
-             * @brief Constructs a polygon based on a json object
-             */
-    Polygon(json &j);
+public:
+  /**
+   * @brief Constructs a polygon based on a json object
+   */
+  Polygon(json &j);
 
-    /**
-             * @brief Default destructor
-             */
-    ~Polygon() = default;
+  /**
+   * @brief Default destructor
+   */
+  ~Polygon() = default;
 
-  private:
-    /* data */
-    std::vector<Line> m_lines;
+  /**
+	 * @brief Draw all lines in a canvas.
+	 */
+  void draw(Canvas &cv, LINE_MODE mode);
+
+private:
+  /* data */
+  std::vector<Line> m_lines;
 };
 
 } // namespace rstzr
