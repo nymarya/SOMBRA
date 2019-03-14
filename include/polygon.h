@@ -4,26 +4,27 @@
 #include "graphic.h"
 #include "line.h"
 
-namespace rstzr{
+namespace rstzr
+{
 
-    class Polygon : public Graphic
-    {
-        public:
-            /**
+class Polygon : public Graphic
+{
+  public:
+    /**
              * @brief Constructs a polygon based on a json object
              */
-            Polygon(json &j);
+    Polygon(json &j);
 
-            /**
+    /**
              * @brief Default destructor
              */
-            ~Polygon() = default;
-        private:
-            /* data */
-            std::vector<Line> lines;
-    
-    };
-    
-}
+    ~Polygon() = default;
+
+  private:
+    /* data */
+    std::vector<Line> m_lines;
+};
+
+} // namespace rstzr
 
 #endif
