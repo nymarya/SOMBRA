@@ -11,6 +11,7 @@
 #include "line.h"
 #include "circle.h"
 #include "polygon.h"
+#include "graphic_composite.h"
 
 #include "json.hpp"
 
@@ -43,8 +44,8 @@ private:
   int m_mode;
 
   /**
-             * @brief Instantiate object]
-             */
+     * @brief Instantiate object]
+     */
   std::unique_ptr<Graphic> invoke(json &j);
 };
 } // namespace rstzr

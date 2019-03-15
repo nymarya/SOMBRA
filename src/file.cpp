@@ -101,6 +101,15 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 	{
 		return std::make_unique<Polygon>(j);
 	}
+	else if (name == "group")
+	{
+		std::vector<Graphic> shapes;
+		auto graphics = j.at('shapes');
+		for (auto i = 0u; i < graphics.size(); i++)
+			shapes.push_back( *invoke( graphics[i] ).get() );
+
+		return std::make_unique<GraphicComposite>(shapes);
+	}
 	else
 	{
 		throw std::invalid_argument("Invalid syntax. Type not found: " + name);
