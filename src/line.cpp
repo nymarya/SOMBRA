@@ -66,6 +66,8 @@ void rstzr::Line::drawBresenham(Canvas &c)
     float dx = x1 - x0;
     float p = 0.0;
 
+    std::cout << "foda-se 1\n";
+
     // Flag to verify wheter movement m1 is
     // vertical, ie., which axis must be explored
     bool turn = abs(dx) < abs(dy);
@@ -81,7 +83,10 @@ void rstzr::Line::drawBresenham(Canvas &c)
         // dy < 0 : move down
 
         if (dy < 0)
+        {
             i = -1;
+            dy = -dy;
+        }
         else if (dy == 0)
             i = 0;
         else
@@ -104,6 +109,7 @@ void rstzr::Line::drawBresenham(Canvas &c)
     }
     else
     {
+        std::cout << "foda-se 2\n";
         //If |dx| < |dy|, y axis always moves up
         // and x axis' move depends on the sign of dx
         // dx >= 0: move to left
@@ -183,7 +189,7 @@ float *rstzr::Line::to_bucket()
     auto x_min = x1 > x2 ? x2 : x1;
 
     // dx/dy
-    float m_inverse = (y2 - y1) == 0 ? 0.0:  (x2 - x1) / (y2 - y1);
+    float m_inverse = (y2 - y1) == 0 ? 0.0 : (x2 - x1) / (y2 - y1);
 
     bucket[0] = y_max;
     bucket[1] = x_min;
@@ -196,13 +202,15 @@ float *rstzr::Line::to_bucket()
 /**
  * @brief Get the first point.
  */
-rstzr::Point2D rstzr::Line::p1(){
+rstzr::Point2D rstzr::Line::p1()
+{
     return m_p1;
 }
 
 /**
  * @brief Get the second point.
  */
-rstzr::Point2D rstzr::Line::p2(){
+rstzr::Point2D rstzr::Line::p2()
+{
     return m_p2;
 }

@@ -18,21 +18,21 @@ class GraphicComposite : public Graphic
 {
 
   public:
-    GraphicComposite(std::vector<Graphic> &gs);
+    GraphicComposite(json &j, std::vector<std::unique_ptr<Graphic>> &gs);
     ~GraphicComposite() = default;
 
     /**
-     * @brief Abstract method for drawing the figure.
+     * @brief Method for drawing the figure.
      */
-    virtual void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM) = 0;
+    void draw(Canvas &cv, LINE_MODE mode = LINE_MODE::BRESENHAM);
 
     /**
      * @brief Fill the figure.
      */
-    virtual void fill(Canvas &cv);
+    void fill(Canvas &cv);
 
   private:
-    std::vector<Graphic> m_graphics;
+    std::vector<std::unique_ptr<Graphic>> m_graphics;
 };
 
 } // namespace rstzr

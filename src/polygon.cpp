@@ -6,6 +6,7 @@
 rstzr::Polygon::Polygon(json &j)
     : Graphic(j)
 {
+    std::cout <<"merda p\n";
     std::vector<Line> vec;
     m_lines = vec;
     auto points = j.at("points");
@@ -18,7 +19,7 @@ rstzr::Polygon::Polygon(json &j)
         auto y0 = points[i][1];
         auto y1 = points[i + 1][1];
 
-        if (y0 <= y1)
+        if ((y0 <= y1) || (x0 <= x1))
         {
             Line line(Point2D(x0, y0), Point2D(x1, y1), c);
             m_lines.push_back(line);
@@ -36,8 +37,12 @@ rstzr::Polygon::Polygon(json &j)
  */
 void rstzr::Polygon::draw(Canvas &cv, LINE_MODE mode)
 {
-    for (auto line : m_lines)
+    std::cout <<"p\n";
+    for (auto line : m_lines){
+        std::cout << "l <" <<line.p1().x() <<", "<<line.p1().y() << "> <" <<line.p2().x() <<", "<<line.p2().y()<<"\n";
         line.draw(cv, mode);
+    }
+        
 }
 
 /**

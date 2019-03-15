@@ -82,6 +82,7 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 {
 
 	std::string name = j.at("type");
+	std::cout << name << "\n";
 
 	std::unique_ptr<rstzr::Graphic> graphic;
 
@@ -103,12 +104,13 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 	}
 	else if (name == "group")
 	{
-		std::vector<Graphic> shapes;
-		auto graphics = j.at('shapes');
+		std::vector<std::unique_ptr<rstzr::Graphic>> shapes;
+		auto graphics = j.at("shapes");
+		std::cout << j << std::endl;
 		for (auto i = 0u; i < graphics.size(); i++)
-			shapes.push_back( *invoke( graphics[i] ).get() );
+			shapes.push_back( invoke( graphics[i] ) );
 
-		return std::make_unique<GraphicComposite>(shapes);
+		return std::make_unique<GraphicComposite>(j, shapes);
 	}
 	else
 	{

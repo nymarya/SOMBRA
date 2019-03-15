@@ -194,7 +194,7 @@ int main()
      while (it != objects.end())
      {
           it->get()->draw(canvas);
-          it->get()->fill(canvas);
+          //it->get()->fill(canvas);
           it++;
      }
 
