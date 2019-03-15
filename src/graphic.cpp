@@ -70,7 +70,7 @@ int rstzr::Graphic::stroke_width() const
  * @brief Fill the figure.
  */
 void rstzr::Graphic::fill(Canvas &cv){
-    std::cout << "fill g\n";
+    
 }
 
 /**

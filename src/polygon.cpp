@@ -6,7 +6,6 @@
 rstzr::Polygon::Polygon(json &j)
     : Graphic(j)
 {
-    std::cout <<"merda p\n";
     std::vector<Line> vec;
     m_lines = vec;
     auto points = j.at("points");
@@ -37,12 +36,8 @@ rstzr::Polygon::Polygon(json &j)
  */
 void rstzr::Polygon::draw(Canvas &cv, LINE_MODE mode)
 {
-    std::cout <<"p\n";
-    for (auto line : m_lines){
-        std::cout << "l <" <<line.p1().x() <<", "<<line.p1().y() << "> <" <<line.p2().x() <<", "<<line.p2().y()<<"\n";
-        line.draw(cv, mode);
-    }
-        
+    for (auto line : m_lines)
+        line.draw(cv, mode);        
 }
 
 /**
@@ -50,7 +45,6 @@ void rstzr::Polygon::draw(Canvas &cv, LINE_MODE mode)
  */
 void rstzr::Polygon::fill(Canvas &cv)
 {
-    std::cout << "fill p\n";
     // Get ET
     auto et = ET();
     std::cout.precision(4);

@@ -11,7 +11,6 @@ rstzr::GraphicComposite::GraphicComposite(json &j,std::vector<std::unique_ptr<Gr
  */
 void rstzr::GraphicComposite::draw(Canvas &cv, LINE_MODE mode){
     for (auto i = 0u; i < m_graphics.size(); i++){
-        std::cout << "g\n";
         m_graphics[i]->draw(cv);
     }
         

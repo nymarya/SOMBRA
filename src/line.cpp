@@ -66,8 +66,6 @@ void rstzr::Line::drawBresenham(Canvas &c)
     float dx = x1 - x0;
     float p = 0.0;
 
-    std::cout << "foda-se 1\n";
-
     // Flag to verify wheter movement m1 is
     // vertical, ie., which axis must be explored
     bool turn = abs(dx) < abs(dy);
@@ -109,7 +107,6 @@ void rstzr::Line::drawBresenham(Canvas &c)
     }
     else
     {
-        std::cout << "foda-se 2\n";
         //If |dx| < |dy|, y axis always moves up
         // and x axis' move depends on the sign of dx
         // dx >= 0: move to left
