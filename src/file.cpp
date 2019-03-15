@@ -82,7 +82,6 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 {
 
 	std::string name = j.at("type");
-	std::cout << name << "\n";
 
 	std::unique_ptr<rstzr::Graphic> graphic;
 
@@ -106,7 +105,6 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 	{
 		std::vector<std::unique_ptr<rstzr::Graphic>> shapes;
 		auto graphics = j.at("shapes");
-		std::cout << j << std::endl;
 		for (auto i = 0u; i < graphics.size(); i++)
 			shapes.push_back( invoke( graphics[i] ) );
 

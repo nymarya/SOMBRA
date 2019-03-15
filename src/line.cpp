@@ -25,7 +25,6 @@ rstzr::Line::Line(Point2D p1, Point2D p2, Color &stroke)
  */
 void rstzr::Line::drawDDA(Canvas &c)
 {
-    std::cout << " dda\n";
     coord_type x0 = m_p1.x();
     coord_type x1 = m_p2.x();
     coord_type y0 = m_p1.y();
