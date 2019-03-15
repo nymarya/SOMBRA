@@ -6,7 +6,9 @@
 
 namespace rstzr
 {
-
+/**
+ * @brief Class that represents a polygon.
+ */
 class Polygon : public Graphic
 {
 public:
@@ -24,6 +26,16 @@ public:
 	 * @brief Draw all lines in a canvas.
 	 */
   void draw(Canvas &cv, LINE_MODE mode);
+
+  /**
+   * @brief Fill the figure using the scan-line method.
+   */
+  void fill(Canvas &cv);
+
+  /**
+   * @brief Get the global edges ordered by their smallest y coordinate.
+   */
+  std::vector<std::vector<int>> EAT();
 
 private:
   /* data */

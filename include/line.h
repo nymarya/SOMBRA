@@ -46,6 +46,11 @@ class Line : public Graphic
 	 */
 	void draw(Canvas &cv, LINE_MODE mode);
 
+	/**
+	 * @brief Get the data needed for a ET bucket (y_max, x_min, 1/m)
+	 */
+	int* to_bucket();
+
   private:
 	Point2D m_p1;
 	Point2D m_p2;

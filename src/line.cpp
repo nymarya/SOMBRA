@@ -80,12 +80,12 @@ void rstzr::Line::drawBresenham(Canvas &c)
         // dy >= 0: move up
         // dy < 0 : move down
 
-        if(dy < 0) 
+        if (dy < 0)
             i = -1;
-        else if(dy == 0)
+        else if (dy == 0)
             i = 0;
         else
-            i=1;
+            i = 1;
         p = 2 * dy - 2 * dx;
 
         for (auto x = x0 + 1; x <= x1; x++)
@@ -109,21 +109,22 @@ void rstzr::Line::drawBresenham(Canvas &c)
         // dx >= 0: move to left
         // dx < 0 : move to right
 
-        if(dx < 0){
+        if (dx < 0)
+        {
             i = -1;
             dx = -dx;
         }
-        else if(dx == 0)
+        else if (dx == 0)
             i = 0;
         else
-            i=1;
+            i = 1;
 
         p = 2 * dx - 2 * dy;
         for (auto y = y0 + 1; y <= y1; y++)
         {
             if (p >= 0)
             {
-                x +=i;
+                x += i;
                 p += 2 * dx - 2 * dy;
             }
             else
@@ -151,4 +152,43 @@ void rstzr::Line::draw(Canvas &cv, LINE_MODE mode)
         drawDDA(cv);
         drawBresenham(cv);
     }
+}
+
+/**
+ * @brief Get the data needed for a ET bucket (y_max, x_min, 1/m)
+ */
+int *rstzr::Line::to_bucket()
+{
+    auto bucket = new int[3];
+
+    auto x1 = m_p1.x();
+    auto y1 = m_p1.y();
+    auto x2 = m_p2.x();
+    auto y2 = m_p2.y();
+
+    auto y_max = 0;
+    auto y_min = 0;
+
+    if (y1 < y2)
+    {
+        y_max = y2;
+        y_min = y1;
+    }
+    else
+    {
+        y_max = y1;
+        y_min = y2;
+    }
+
+    auto x_min = x1 > x2 ? x2 : x1;
+
+    // dx/dy
+    auto m_inverse = (x2 - x1) / (y2 - y1);
+
+    bucket[0] = y_max;
+    bucket[1] = x_min;
+    bucket[2] = m_inverse;
+    bucket[3] = y_min;
+
+    return bucket;
 }
