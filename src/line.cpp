@@ -157,14 +157,14 @@ void rstzr::Line::draw(Canvas &cv, LINE_MODE mode)
 /**
  * @brief Get the data needed for a ET bucket (y_max, x_min, 1/m)
  */
-int *rstzr::Line::to_bucket()
+float *rstzr::Line::to_bucket()
 {
-    auto bucket = new int[3];
+    auto bucket = new float[4];
 
-    auto x1 = m_p1.x();
-    auto y1 = m_p1.y();
-    auto x2 = m_p2.x();
-    auto y2 = m_p2.y();
+    float x1 = m_p1.x();
+    float y1 = m_p1.y();
+    float x2 = m_p2.x();
+    float y2 = m_p2.y();
 
     auto y_max = 0;
     auto y_min = 0;
@@ -183,7 +183,7 @@ int *rstzr::Line::to_bucket()
     auto x_min = x1 > x2 ? x2 : x1;
 
     // dx/dy
-    auto m_inverse = (x2 - x1) / (y2 - y1);
+    float m_inverse = (y2 - y1) == 0 ? 0.0:  (x2 - x1) / (y2 - y1);
 
     bucket[0] = y_max;
     bucket[1] = x_min;
@@ -191,4 +191,18 @@ int *rstzr::Line::to_bucket()
     bucket[3] = y_min;
 
     return bucket;
+}
+
+/**
+ * @brief Get the first point.
+ */
+rstzr::Point2D rstzr::Line::p1(){
+    return m_p1;
+}
+
+/**
+ * @brief Get the second point.
+ */
+rstzr::Point2D rstzr::Line::p2(){
+    return m_p2;
 }

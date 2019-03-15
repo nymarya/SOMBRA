@@ -49,7 +49,17 @@ class Line : public Graphic
 	/**
 	 * @brief Get the data needed for a ET bucket (y_max, x_min, 1/m)
 	 */
-	int* to_bucket();
+	float* to_bucket();
+
+	/**
+	 * @brief Get the first point.
+	 */
+	Point2D p1();
+
+	/**
+	 * @brief Get the second point.
+	 */
+	Point2D p2();
 
   private:
 	Point2D m_p1;

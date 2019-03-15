@@ -1,7 +1,7 @@
 #include "graphic.h"
 
 rstzr::Graphic::Graphic(json &j)
-    : m_stroke_color(Color(0, 0, 0))
+    : m_stroke_color(Color(0, 0, 0)), m_fill_color(Color(255,0,0))
 {
     /*empty*/
 }
@@ -70,7 +70,7 @@ int rstzr::Graphic::stroke_width() const
  * @brief Fill the figure.
  */
 void rstzr::Graphic::fill(Canvas &cv){
-    
+    std::cout << "fill g\n";
 }
 
 /**

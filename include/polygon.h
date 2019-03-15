@@ -4,6 +4,9 @@
 #include "graphic.h"
 #include "line.h"
 
+
+#include <typeinfo>
+
 namespace rstzr
 {
 /**
@@ -30,12 +33,12 @@ public:
   /**
    * @brief Fill the figure using the scan-line method.
    */
-  void fill(Canvas &cv);
+  void fill(Canvas &cv) override;
 
   /**
    * @brief Get the global edges ordered by their smallest y coordinate.
    */
-  std::vector<std::vector<int>> EAT();
+  std::vector<std::vector<float>> ET();
 
 private:
   /* data */

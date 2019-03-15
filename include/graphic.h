@@ -68,7 +68,7 @@ class Graphic
   /**
    * @brief Fill the figure.
    */
-   void fill(Canvas &cv);
+   virtual void fill(Canvas &cv);
 
  private:
    /* data */
