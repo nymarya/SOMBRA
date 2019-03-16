@@ -67,15 +67,30 @@ The `arc` type expects the same arguments as `circle`, plus the information abou
 }
 ```
 
-- [ ] Linha 
+### Groups
 
-    - [x] Segmento de linha
-    - [x] Polilinha
-- [x] Círculo 
-- [x] Semi-círculo
-- [ ] Elipse [opcional]
-- [ ] Preenchimento
-    - [ ] Scan-line approach
-    - [x] Fill
-- [x] Antialiasing
-- [ ] Paleta de cores
+You may group several types of graphic in one objec using the type `group` simply by passing all the objects at the `objects`argument.
+
+```json
+{
+    "type":"group",
+    "color":"255,255,255",
+    "shapes":[
+        {
+            "type":"polygon",
+            "points":[
+                [800,100],[700,10],
+                [800, 100],[800, 200],
+                [600,200] , [800, 200],
+                [600, 100], [600,200],
+                [600, 100], [700, 10]
+            ]
+        },
+        {
+            "type":"circle",
+            "center": [700,150],
+            "radius":150
+        }
+    ]
+}
+```
