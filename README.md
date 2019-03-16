@@ -5,9 +5,32 @@ Simple Objects Minimal Bidimensional RAsterizer
 
 ## How to use
 
+|  Command           | Description  |
+| :-----| :-------------|
+| ```$ make``` | Compile |
+| ```$ ./canvas.out``` | Run | 
+
+
+
 ## Usage
 
-Palette, scene, canvas
+In order to describe a scene, specify the
+filename where the image will be saved inside the `gallery` folder, as well as the objects, and its width and height. 
+
+You can choose a global color for fill and stroke or define it inside the graphic object. The color is repreented by a string with the format `red,green,blue`.
+
+```json
+{
+	"scene": {
+		"name": "canvas",
+		"filename": "image",
+		"width": 1000,
+		"height": 1000,
+		"background": "255,255,255",
+		"fill":"0,255,0",
+                "objects": [...]
+    }
+```
 
 ### Line
 
@@ -23,7 +46,7 @@ In order to define a line, you must specify the `line` to the `type` argument an
 ```
 ### Polygon
 
-If you want to draw a polygon, you must specify the `line` to the `type` argument and the keys `points` that receives the pairs with points that represent a line. For example, the input above draws 4 lines: from <10,10> to <10,200>, from <10,200> to <100, 200>, and so on.
+If you want to draw a polygon, you must specify the `line` to the `type` argument and the keys `points` that receives the pairs of points that represent a line. For example, the input above draws 4 lines: from <10,10> to <10,200>, from <10,200> to <100, 200>, and so on.
 
 ```json
 {
@@ -39,7 +62,7 @@ If you want to draw a polygon, you must specify the `line` to the `type` argumen
 
 ### Circle
 
-The circle structure requires the keys `centre` that receives a array with the two coordinates of the central point, and `radius`.
+The circle structure requires the keys `centre` that receives an array with the two coordinates of the central point, and `radius`.
 
 ```json
 {
@@ -51,7 +74,7 @@ The circle structure requires the keys `centre` that receives a array with the t
 
 ### Arc
 
-The `arc` type expects the same arguments as `circle`, plus the information about the angles where the arc begin and end (`start_angle` and `end_angle`, respectively)
+The `arc` type expects the same arguments as `circle`, plus the information about the angles where the arc begins and ends (`start_angle` and `end_angle`, respectively)
 
 ```json
 {
@@ -69,7 +92,7 @@ The `arc` type expects the same arguments as `circle`, plus the information abou
 
 ### Groups
 
-You may group several types of graphic in one objec using the type `group` simply by passing all the objects at the `objects`argument.
+You may group several types of graphics in one objects using the type `group` simply by passing all the objects at the `shapes` argument.
 
 ```json
 {
