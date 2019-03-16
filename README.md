@@ -46,7 +46,7 @@ In order to define a line, you must specify the `line` to the `type` argument an
 ```
 ### Polygon
 
-If you want to draw a polygon, you must specify the `line` to the `type` argument and the keys `points` that receives the pairs of points that represent a line. For example, the input above draws 4 lines: from <10,10> to <10,200>, from <10,200> to <100, 200>, and so on.
+If you want to draw a polygon, you must specify the `line` to the `type` argument and the keys `points` that receives the pairs of points that represent a line. For example, the input bellow draws 4 lines: from <10,10> to <10,200>, from <10,200> to <100, 200>, and so on.
 
 ```json
 {
@@ -62,7 +62,7 @@ If you want to draw a polygon, you must specify the `line` to the `type` argumen
 
 ### Circle
 
-The circle structure requires the keys `centre` that receives an array with the two coordinates of the central point, and `radius`.
+The circle structure requires the keys `center` that receives an array with the two coordinates of the central point, and `radius`.
 
 ```json
 {
