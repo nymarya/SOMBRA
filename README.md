@@ -17,7 +17,7 @@ Simple Objects Minimal Bidimensional RAsterizer
 In order to describe a scene, specify the
 filename where the image will be saved inside the `gallery` folder, as well as the objects, and the scene's width and height. 
 
-You can choose a global color for fill and stroke or define it inside the graphic object. The color is represented by a string with the format `red,green,blue`.
+You can choose a global color for the parameters `fill` and stroke(`color`) or define it inside the graphic object. The color is represented by a string with the format `red,green,blue`.
 
 ```json
 {
