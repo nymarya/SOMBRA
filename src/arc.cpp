@@ -24,7 +24,6 @@ rstzr::Arc::Arc(Point2D center, int start_angle, int end_angle, int radius, Colo
 
 void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
 {
-    std::cout << "aa\n";
     //Get the center point
     auto x_centre = m_centre.x();
     auto y_centre = m_centre.y();
@@ -33,8 +32,7 @@ void rstzr::Arc::draw(Canvas &cv, LINE_MODE mode)
     //Get start point
     coord_type x = 0;
     coord_type y = radius;
-    std::cout << "< " << x << "," << y << ">\n";
-
+    
     // Get the parcial differences (deltas) of L and SE directions
     auto dl = 3;
     auto dse = -2 * radius + 5;

@@ -11,9 +11,9 @@ rstzr::File::File(std::string filename)
 std::vector<std::unique_ptr<rstzr::Graphic>> rstzr::File::read(Canvas &cv)
 {
 	// read a JSON file
-	std::ifstream i(m_filename);
+	std::ifstream input(m_filename);
 	json j;
-	i >> j;
+	input >> j;
 
 	// Get scene
 	auto scene = j.at("scene");
@@ -26,15 +26,101 @@ std::vector<std::unique_ptr<rstzr::Graphic>> rstzr::File::read(Canvas &cv)
 
 	m_filename = scene.at("filename");
 
-	//Load palette
+	int *colors = new int[3];
+	std::string color = "";
+	//Load background
+	try
+	{
+		color = scene.at("background");
+	}
+	catch (json::exception e1)
+	{
+		color = "255,255,255";
+	}
 
-	//Load background image
+	// Get the color channels
+	size_t pos = 0;
+	int ind = 0;
+	std::string token;
+	while ((pos = color.find(",")) != std::string::npos)
+	{
+		token = color.substr(0, pos);
+		colors[ind++] = std::stoi(token);
+		color.erase(0, pos + 1);
+	}
 
 	// Get all graphic objects
 	auto objs = scene.at("objects");
 	std::vector<std::unique_ptr<Graphic>> graphics;
 	for (auto i = 0u; i < objs.size(); i++)
+	{
 		graphics.push_back(invoke(objs[i]));
+
+		// Check wheter stroke and background color are
+		//in the json. If not, set the canvas' info
+		try
+		{
+			color = objs[i].at("color");
+		}
+		catch (json::exception e)
+		{
+			try
+			{
+				color = scene.at("color");
+			}
+			catch (json::exception e1)
+			{
+				color = "0,0,0";
+			}
+		}
+
+		// Get the color channels
+		pos = 0;
+		ind = 0;
+		colors[0] = 0;colors[0]=0; colors[0] = 0;
+		while ((pos = color.find(",")) != std::string::npos)
+		{
+			token = color.substr(0, pos);
+			colors[ind] = std::stoi(token);
+			color.erase(0, pos + 1);
+			ind++;
+		}
+		colors[ind] = std::stoi(color);
+		graphics.back()->stroke_color(Color(colors[0], colors[1], colors[2]));
+
+		// FILL
+		try
+		{
+			color = objs[i].at("fill");
+			if (color == "None")
+			{
+				graphics.back()->fill_mode(FILL_MODE::NONE);
+			}
+		}
+		catch (json::exception e)
+		{
+			try
+			{
+				color = scene.at("fill");
+			}
+			catch (json::exception e1)
+			{
+				throw std::invalid_argument("Invalid syntax. Missing argument 'fill' ");
+			}
+		}
+
+		// Get the color channels
+		pos = 0;
+		ind = 0;
+		while ((pos = color.find(",")) != std::string::npos)
+		{
+			token = color.substr(0, pos);
+			colors[ind++] = std::stoi(token);
+			color.erase(0, pos + 1);
+		}
+		colors[ind] = std::stoi(color);
+		graphics.back()->fill_color(Color(colors[0], colors[1], colors[2]));
+	}
 
 	// Return objects
 	return graphics;
@@ -83,8 +169,6 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 
 	std::string name = j.at("type");
 
-	std::unique_ptr<rstzr::Graphic> graphic;
-
 	if (name == "arc")
 	{
 		return std::make_unique<Arc>(j);
@@ -106,7 +190,7 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 		std::vector<std::unique_ptr<rstzr::Graphic>> shapes;
 		auto graphics = j.at("shapes");
 		for (auto i = 0u; i < graphics.size(); i++)
-			shapes.push_back( invoke( graphics[i] ) );
+			shapes.push_back(invoke(graphics[i]));
 
 		return std::make_unique<GraphicComposite>(j, shapes);
 	}
@@ -115,7 +199,5 @@ std::unique_ptr<rstzr::Graphic> rstzr::File::invoke(json &j)
 		throw std::invalid_argument("Invalid syntax. Type not found: " + name);
 	}
 
-	//TODO: Check wheter stroke and background color are
-	//in the json. If not, set the canvas' info
 	//If fill=None, set the method
 }

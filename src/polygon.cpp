@@ -47,15 +47,6 @@ void rstzr::Polygon::fill(Canvas &cv)
 {
     // Get ET
     auto et = ET();
-    std::cout.precision(4);
-    for (auto i = 0u; i < et.size(); i++)
-    {
-        for (auto j = 0u; j < et[i].size(); j++)
-        {
-            std::cout << et[i][j] << " ";
-        }
-    }
-    std::cout << std::endl;
 
     // Get the smallest y that has an entry in ET
     auto y_min = et[0][0];
@@ -115,13 +106,9 @@ std::vector<std::vector<float>> rstzr::Polygon::ET()
     {
         edges[i] = {0.0, 0.0, 0.0};
         edges[i][0] = m_lines[i].to_bucket()[0];
-        std::cout << "e "<< edges[i][0] <<"\n";
         edges[i][1] = m_lines[i].to_bucket()[1];
-        std::cout << "e1 "<< edges[i][1] <<"\n";
         edges[i][2] = m_lines[i].to_bucket()[2];
-        std::cout << "e2 "<< edges[i][2] <<"\n";
     }
-    std::cout << "edges\n";
 
     // Sort using the bucket sort
     // @see https://www.geeksforgeeks.org/bucket-sort-2/

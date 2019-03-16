@@ -7,7 +7,6 @@
 void rstzr::gray(std::vector<component_t> &matrix, std::vector<component_t> &pic,
                  size_t width, size_t height)
 {
-    std::cout << "gray\n";
     for (unsigned int x = 0; x < width; x++)
     {
         for (unsigned int y = 0; y < height; y++)
@@ -22,8 +21,6 @@ void rstzr::gray(std::vector<component_t> &matrix, std::vector<component_t> &pic
             }
         }
     }
-    std::cout << "Length of array = " << static_cast<unsigned>((component_t)(sizeof(matrix) / sizeof(matrix[0]))) << std::endl;
-    std::cout << "Length of array = " << (sizeof(pic) / sizeof(pic[0])) << std::endl;
 }
 
 /**
@@ -218,11 +215,9 @@ std::vector<rstzr::Point2D *> rstzr::peak_detection(std::vector<component_t> &ma
             }
             else
             {
-                std::cout << "peak5\n";
                 if (mag[j + i * width] > mag[j - 1 + i * width] &&
                     mag[j + i * width] > mag[j + 1 + i * width])
                 {
-                    std::cout << "p\n";
                     v.push_back(new Point2D(i, j));
                     h.insert(std::pair<int, int>(i, j));
                 }
@@ -248,12 +243,10 @@ void rstzr::recursiveDT(std::vector<component_t> &mag, component_t *final, std::
     // then exit the funciton.
     if (mag[b + a * width] < lo || a < 0 || b < 0 || a >= height || b >= width)
     {
-        std::cout << "grr1\n";
         return;
     }
     if (h.find(a) != h.end())
     {
-        std::cout << "grr2\n";
         return;
     }
 
@@ -274,7 +267,6 @@ void rstzr::recursiveDT(std::vector<component_t> &mag, component_t *final, std::
                     final[b + a * width] = 255;
                     result.push_back(b + a * width);
                     flag = 1;
-                    std::cout << "a\n";
                     break;
                 }
             }
@@ -297,7 +289,6 @@ void rstzr::recursiveDT(std::vector<component_t> &mag, component_t *final, std::
                 {
                     recursiveDT(mag, final, h, peaks, a + p, b + q, 1, height, width, result);
                     result.push_back(b + a * width);
-                    std::cout << "b\n";
                 }
             }
         }
@@ -306,19 +297,19 @@ void rstzr::recursiveDT(std::vector<component_t> &mag, component_t *final, std::
     return;
 }
 
+/**
+ * @see https://github.com/sorazy/canny/blob/master/sobel.cpp
+ */
 std::vector<int> rstzr::sobel(std::vector<component_t> &matrix, size_t width, size_t height)
 {
-    std::cout << "sob\n";
     std::vector<int> result;
 
     int maskx[3][3] = {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}};
     int masky[3][3] = {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}};
 
-    std::cout << "a\n";
     auto size = width * height;
     // These matrices will hold the integer values of the input image
 
-    std::cout << "aa\n";
     // Reading in the input image
     std::vector<component_t> pic(size);
     gray(matrix, pic, width, height);
@@ -330,7 +321,6 @@ std::vector<int> rstzr::sobel(std::vector<component_t> &matrix, size_t width, si
     // the values in the matrices outputx and outputy
     int mr = 1;
     int maxx = 0, maxy = 0;
-    std::cout << "for1\n";
     for (auto i = 0u; i < height; i++)
     {
         for (auto j = 0u; j < width; j++)
@@ -362,7 +352,6 @@ std::vector<int> rstzr::sobel(std::vector<component_t> &matrix, size_t width, si
     }
 
     // Make sure all the values are between 0-255
-    std::cout << "for2\n";
     for (auto i = 0u; i < height; i++)
     {
         for (auto j = 0u; j < width; j++)
@@ -374,7 +363,6 @@ std::vector<int> rstzr::sobel(std::vector<component_t> &matrix, size_t width, si
 
     // Find gradient and maxval
     int maxVal = 0;
-    std::cout << "for3\n";
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
@@ -386,13 +374,11 @@ std::vector<int> rstzr::sobel(std::vector<component_t> &matrix, size_t width, si
         }
     }
 
-    std::cout << "for4\n";
     // Make sure all the magnitude values are between 0-255
     for (int i = 0; i < height; i++)
         for (int j = 0; j < width; j++)
             mag[i][j] = mag[i][j] / maxVal * 255;
 
-    std::cout << "for5\n";
     // Make sure to cast back to char before outputting
     // Also to avoid any wonky results, get rid of any decimals by casting to int first
     for (int i = 0; i < height; i++)

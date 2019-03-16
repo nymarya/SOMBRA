@@ -13,7 +13,6 @@ rstzr::Circle::Circle(json &j)
  */
 void rstzr::Circle::fill(Canvas &cv)
 {
-    std::cout << "fill c\n";
     //if (fill_mode() != FILL_MODE::NONE)
         //boundary_fill(cv, centre(), fill_color(), stroke_color());
 }
@@ -25,7 +24,7 @@ void rstzr::Circle::boundary_fill(Canvas &cv, const rstzr::Point2D &p, const rst
 {
     auto x = p.x();
     auto y = p.y();
-    std::cout << "<" <<x << "," <<y<<">\n";
+    
     if (x < 0 || x > cv.width()-1 )
         return;
     if (y < 0 || y > cv.height()-1 )

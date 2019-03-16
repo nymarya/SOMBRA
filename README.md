@@ -23,8 +23,49 @@ In order to define a line, you must specify the `line` to the `type` argument an
 ```
 ### Polygon
 
-If you want to draw a polygon, you must specify the `line` to the `type` argument and the keys `points` that receives the 
+If you want to draw a polygon, you must specify the `line` to the `type` argument and the keys `points` that receives the pairs with points that represent a line. For example, the input above draws 4 lines: from <10,10> to <10,200>, from <10,200> to <100, 200>, and so on.
 
+```json
+{
+    "type": "polygon",
+    "points": [
+        [10,10],[10,200],
+        [10,200],[100,200],
+        [200,10],[100,200],
+        [10,10], [200, 10]
+    ]
+}
+```
+
+### Circle
+
+The circle structure requires the keys `centre` that receives a array with the two coordinates of the central point, and `radius`.
+
+```json
+{
+    "type":"circle",
+    "center": [700,150],
+    "radius":150
+}
+```
+
+### Arc
+
+The `arc` type expects the same arguments as `circle`, plus the information about the angles where the arc begin and end (`start_angle` and `end_angle`, respectively)
+
+```json
+{
+    "type": "arc",
+    "radius": 100,
+    "center": [
+        500,
+        500
+    ],
+    "color": "0,0,0",
+    "start_angle": 180,
+    "end_angle": 0
+}
+```
 
 - [ ] Linha 
 

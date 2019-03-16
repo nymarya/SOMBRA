@@ -69,6 +69,8 @@ void rstzr::Line::drawBresenham(Canvas &c)
     // vertical, ie., which axis must be explored
     bool turn = abs(dx) < abs(dy);
 
+    Color cc = stroke_color();
+ 
     auto x = x0;
     auto y = y0;
     int i = 1;

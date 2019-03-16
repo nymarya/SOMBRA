@@ -1,7 +1,7 @@
 #include "graphic.h"
 
 rstzr::Graphic::Graphic(json &j)
-    : m_stroke_color(Color(0, 0, 0)), m_fill_color(Color(255,0,0))
+: m_fill_color(Color(0,0,0)), m_stroke_color(Color(255,0,0))
 {
     /*empty*/
 }
@@ -71,6 +71,13 @@ int rstzr::Graphic::stroke_width() const
  */
 void rstzr::Graphic::fill(Canvas &cv){
     
+}
+
+/**
+ * @brief Set the fill mode of the figure (boundary, scan-line or none)
+ */
+void rstzr::Graphic::fill_mode( FILL_MODE mode) {
+    m_fill_mode = mode;
 }
 
 /**

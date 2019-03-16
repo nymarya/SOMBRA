@@ -3,7 +3,12 @@
 rstzr::GraphicComposite::GraphicComposite(json &j,std::vector<std::unique_ptr<Graphic>> &gs)
     : Graphic(j)
 {
-    m_graphics = std::move(gs) ;
+    m_graphics = std::move(gs);
+
+    for( auto i=0u; i < m_graphics.size(); i++){
+        m_graphics[i]->stroke_color(stroke_color());
+        m_graphics[i]->fill_color(fill_color());
+    }
 }
 
 /**

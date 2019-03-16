@@ -4,8 +4,8 @@
 		"filename": "teste",
 		"width": 1000,
 		"height": 1000,
-		"palette": "",
-		"background": "white",
+		"background": "255,255,255",
+		"fill":"0,255,0",
 		"objects": [
 			{
 				"type": "arc",
@@ -14,7 +14,7 @@
 					500,
 					500
 				],
-				"color": "black",
+				"color": "0,0,0",
 				"start_angle": 180,
 				"end_angle": 0
 			},
@@ -25,7 +25,7 @@
 					500,
 					500
 				],
-				"color": "black"
+				"color": "0,200,90"
 			},
 			{
 				"type": "line",
@@ -78,7 +78,7 @@
 					500,
 					500
 				],
-				"color": "black",
+				"color": "0,0,0",
 				"start_angle": 135,
 				"end_angle": 45
 			},
@@ -93,6 +93,7 @@
 			},
 			{
 				"type":"group",
+				"color":"255,255,255",
 				"shapes":[
 					{
 						"type":"polygon",
