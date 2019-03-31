@@ -41,6 +41,13 @@ void rstzr::Polygon::draw(Canvas &cv, LINE_MODE mode)
 }
 
 /**
+ * @brief Comparator function to sort aet by x.
+ */
+bool compare_aet( std::vector<float> v1, std::vector<float> v2){
+    return v1[1] < v2[1];
+}
+
+/**
  * @brief Fill the figure using the scan-line method.
  */
 void rstzr::Polygon::fill(Canvas &cv)
@@ -60,31 +67,52 @@ void rstzr::Polygon::fill(Canvas &cv)
 
     // Init AET
     std::vector<std::vector<float>> aet;
-/**
+
+    auto y_current = 0;
+
     // Repeats until both AET and ET are empty
     while(!aet.empty() || !et.empty() ){
         // Move to AET the edges that are minimal (y=y_min)
         for( auto i=0u; i< m_lines.size(); i++){
             auto line = m_lines[i];
-            if( (line.p1().y() == y_min) || (line.p2().y() == y_min))
-            aet[i][0] = m_lines[i].to_bucket()[0];
-            aet[i][1] = m_lines[i].to_bucket()[1];
-            aet[i][2] = m_lines[i].to_bucket()[2];
+            auto bucket = line.to_bucket();
+            if( (bucket[3] == y_min) ){
+                aet[i][0] = bucket[0];
+                aet[i][1] = bucket[1];
+                aet[i][2] = bucket[2];
+            }
         }
 
         // Order AET based on the x value
+        std::sort (aet.begin(), aet.begin(), compare_aet);
 
         // Preencha pixels da scan-line y usando pares de x de
         // arestas consecutivas de AET
+        for( auto i=0u; i < aet.size(); i++){
+            auto x = aet[i][1];
+            auto dx = abs(aet[i][4]);
+            while( dx >= 0 )
+                cv.pixel(x + dx--, y_current, fill_color());
+        }
 
         // Remova de AET aquelas arestas y = y max
-
-        // Get next scan-line (y++)
+        std::vector<size_t> to_drop;
+        for( auto i=0u; i < aet.size(); i++){
+            if(aet[i][0] == y_current)
+                to_drop.push_back(i);
+        }
+        for( auto i=0u; i< to_drop.size(); i++)
+            aet.erase(aet.begin() + to_drop[i]);
+            
+        // Get next scan-line
+        y_current++;
 
         //  Para cada aresta não vertical de AET, atualize x para o
         // novo y (usar algoritmo incremental)
+        for( auto i=0u; i < aet.size(); i++)
+            aet[i][1] = y_current;
         
-    }**/
+    }
     
 }
 
@@ -99,15 +127,17 @@ std::vector<std::vector<float>> rstzr::Polygon::ET()
     std::vector<std::vector<float>> edges(n);
 
     // Save the edges with the expected structure for a bucket
-    //  _____________________
-    // | y_max | x_min | 1/m |
-    // |_______|_______|_____|
+    //  _____________________________
+    // |       |       |     |       |
+    // | y_max | x_min | 1/m | y_min |
+    // |_______|_______|_____|_______|
     for (auto i = 0u; i < edges.size(); i++)
     {
-        edges[i] = {0.0, 0.0, 0.0};
+        edges[i] = {0.0, 0.0, 0.0, 0.0};
         edges[i][0] = m_lines[i].to_bucket()[0];
         edges[i][1] = m_lines[i].to_bucket()[1];
         edges[i][2] = m_lines[i].to_bucket()[2];
+        edges[i][3] = m_lines[i].to_bucket()[3];
     }
 
     // Sort using the bucket sort

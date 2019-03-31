@@ -43,6 +43,8 @@ public:
 private:
   /* data */
   std::vector<Line> m_lines;
+
+  // bool compare_aet( std::vector<float> v1, std::vector<float> v2);
 };
 
 } // namespace rstzr

@@ -159,7 +159,7 @@ void rstzr::Line::draw(Canvas &cv, LINE_MODE mode)
 }
 
 /**
- * @brief Get the data needed for a ET bucket (y_max, x_min, 1/m)
+ * @brief Get the data needed for a ET bucket (y_max, x_min, sign, y_min, dx, dy)
  */
 float *rstzr::Line::to_bucket()
 {
@@ -186,13 +186,16 @@ float *rstzr::Line::to_bucket()
 
     auto x_min = x1 > x2 ? x2 : x1;
 
-    // dx/dy
-    float m_inverse = (y2 - y1) == 0 ? 0.0 : (x2 - x1) / (y2 - y1);
+    // dx
+    float dx = (x2 - x1);
+    float dy = (y2 - y1);
 
     bucket[0] = y_max;
     bucket[1] = x_min;
-    bucket[2] = m_inverse;
+    bucket[2] = dx < 0 || dy < 0 ? -1 : 1;
     bucket[3] = y_min;
+    bucket[4] = dx;
+    bucket[5] = dy;
 
     return bucket;
 }
