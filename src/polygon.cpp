@@ -71,7 +71,7 @@ void rstzr::Polygon::fill(Canvas &cv)
     auto y_current = 0;
 
     // Repeats until both AET and ET are empty
-    while(!aet.empty() || !et.empty() ){
+    while(!et.empty() ){
         // Move to AET the edges that are minimal (y=y_min)
         for( auto i=0u; i< m_lines.size(); i++){
             auto line = m_lines[i];
@@ -97,20 +97,32 @@ void rstzr::Polygon::fill(Canvas &cv)
 
         // Remova de AET aquelas arestas y = y max
         std::vector<size_t> to_drop;
+        std::vector<size_t> to_remove;
         for( auto i=0u; i < aet.size(); i++){
             if(aet[i][0] == y_current)
                 to_drop.push_back(i);
+            if(et[i][0] == y_current)
+                to_remove.push_back(i);
         }
-        for( auto i=0u; i< to_drop.size(); i++)
+        for( auto i=0u; i< to_drop.size(); i++){
             aet.erase(aet.begin() + to_drop[i]);
+            et.erase(et.begin()+to_remove[i] );
+        }
             
         // Get next scan-line
         y_current++;
 
         //  Para cada aresta não vertical de AET, atualize x para o
         // novo y (usar algoritmo incremental)
-        for( auto i=0u; i < aet.size(); i++)
-            aet[i][1] = y_current;
+        for( auto i=0u; i < aet.size(); i++){
+            auto bucket_sum = 0;
+            if (aet[i][4] != 0) {
+                bucket_sum += aet[i][4];
+                while (bucket_sum >= aet[i][5]) {
+                    bucket_sum -= aet[i][5];
+                }
+            }
+        }
         
     }
     
